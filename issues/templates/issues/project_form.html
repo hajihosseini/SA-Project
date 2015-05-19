@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{%block content %}
+
+<form action="" method="post">{% csrf_token %}
+    <!--
+    <p><label for="id_ProjectName">project name:</label>
+         <input type="text"  maxlength="200" /></p>
+    <p><label for="id_projectDescription">project description:</label>
+         <textarea rows="4" cols="50" name="comment" form="projectDescription" maxlength="2000"></textarea></p>
+    <p><label for="id_startTime">start time:</label>
+        <input type="date" name="bday">
+    <p><label for="id_finishedTime">finished time:</label>
+        <input type="date" name="bday">
+    <p><label for="id_projectAccessType">is public?</label>
+        <input type="checkbox" name="bday" ></p>
+       <!--<input type="radio" name="state" value="public" checked>Public
+<br>
+<input type="radio" name="state" value="private">Private-->
+    {{ form.as_p }}
+    <input type="submit" value="Create" />
+</form>
+{%endblock%}
