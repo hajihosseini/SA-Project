@@ -15,12 +15,17 @@ class Skill(models.Model):
         return self.skillName
 #==========================================================================================
 class Project(models.Model):
-    ProjectName= models.CharField(max_length=200)
+    ProjectName = models.CharField(max_length=200)
     projectDescription = models.TextField(max_length=2000)
-    projectAccessType=models.BooleanField(default=True)
+    projectAccessType = models.BooleanField(default=True)
+    startTime = models.DateTimeField(null=True)
+    finishedTime = models.DateTimeField(null=True)
     owner = models.ForeignKey(User, related_name="owner")
     def __str__(self):
-        return self.ProjectName
+        return self.name
+    def get_absolute_url(self) :
+        """ it gets the absolute url of current topic page, this method has been used in views"""
+        return reverse("issues:main")
 #==========================================================================================
 class Task(models.Model):
     taskTitle = models.CharField(max_length=200)
@@ -44,7 +49,7 @@ class UserProfile(models.Model):
     #tasks = models.ManyToManyField (Task,related_name="userTasks",null=True)
     @models.permalink
     def get_absolute_url(self):
-        return ('issues:viewprofile', None,{'pk':self.user.pk})
+        return ('issues:profile', None,{'pk':self.user.pk})
     def __str__(self):
         return self.user.username
 def user_post_save(sender, instance, created, **kwargs):
@@ -97,7 +102,7 @@ class Topic(models.Model):
 
     def get_absolute_url(self) :
         """ it gets the absolute url of current topic page, this method has been used in views"""
-        return str("issues:topic", args=[self.pk])
+        return reverse("issues:topic", args=[self.pk])
 
     def lastPost(self)  :
         """returns the most recent post of the topic"""
