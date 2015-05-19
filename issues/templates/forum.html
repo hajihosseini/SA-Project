@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% if user.is_staff %} <a href="{% url 'admin:index' %}">Admin</a> {% endif %}
+                {% if user.is_authenticated %}
+                    <a href="{% url 'issues:main' %}">Main</a>
+                    <a href="{% url 'issues:profile' user.pk %}">Edit profile</a>
+                    <a href="{% url 'issues:viewprofile' user.pk %}">My Page</a>
+                    <a href="{% url 'issues:forums' %}">Forum</a>
+                {% endif %}
+
+                {% if not user.is_authenticated %}<a href="/accounts/login/?next=/issues/">login</a> {% endif %}
+
+                {% if user.is_authenticated %}<a href="/accounts/logout/?next=/issues/">logout</a>{% endif %}
+{% block content %}
+    <style type="text/css">
+        .pagination { margin-top: 20px; margin-left: -20px; }
+        .main { margin-left: 25px; margin-top: 30px; width: 700px; }
+        .title { font-size: 1.4em; margin-top: 0px; padding-left: 4px; }
+        .last { border: 0px; }
+        .title a { text-decoration: none; }
+        .button { background: #999; color: white; padding: 4px; text-decoration: none; }
+        .buttont { background: #999; color: white; padding: 2px; text-decoration: none; }
+        td { border-bottom: 1px solid #ccc; }
+        #list { border: 1px solid #ccc; width: 700px;background:white; }
+        #new_topic { float: right; }
+    </style>
+
+    <div class="main">
+
+      <div id="list">
+          {% if topic_list %}
+            <table border="0" cellpadding="4" width="100%">
+                <tr>
+                    <td>Topics</td>
+                    <td>Replies</td>
+                    <td>Last post</td>
+                    <td></td>
+                </tr>
+
+                <!-- Topics  -->
+                {% for topic in topic_list %}
+                <tr {% if forloop.last %}class="last"{% endif %}>
+                    <td>
+                        <div class="title"> <a href="{% url 'issues:topic' topic.pk %}">{{ topic.title }}</a></div>
+                    </td>
+                    <td>{{ topic.numReplies }}</td>
+                    <td>{{ topic.lastPost.short|linebreaksbr }}</td>
+                    <td><a class="button" href="{% url 'issues:topic' topic.pk %}">VIEW</a></td>
+                </tr>
+
+                {% endfor %}
+            </table>
+        {% else %}
+          <blockquote>No topics in this forum yet..</blockquote>
+        {% endif %}
+        </div>
+        {% include "pagination.html" %}
+        </div>
+{% endblock %}
