@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>{% block title %}ISSUES{% endblock %}</title>
+
+    <style type="text/css">
+        * {
+            font-family:"Comic Sans MS", cursive, sans-serif;
+            color: #555;
+            font-size: 0.98em;
+            word-wrap:break-word;
+        }
+        #menu a {
+            font-family:"Comic Sans MS", cursive, sans-serif;
+            text-decoration: none;
+            background: #a6a6a6;
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+            border-right: 2px solid #fff;
+            padding-right: 3px;
+            padding-left: 3px;
+            color: white;
+            font-size: 1em;
+        }
+        a:hover {
+            font-family:"Comic Sans MS", cursive, sans-serif;
+            background: #eeebeb;
+            border-top: 1px solid #aaa;
+            border-bottom: 1px solid #aaa;
+            color: #555;
+        }
+        body {
+        background-color: white;}
+        #container { margin: auto; width: 700px; border: 0px solid; }
+        p { font-family:"Comic Sans MS", cursive, sans-serif;font-size: 1.1em;background:white; }
+        h3 { margin-right: 30px; display: inline; }
+    </style>
+
+</head>
+
+<body>
+    <div id="sidebar"> {% block sidebar %} {% endblock %} </div>
+    <div id="container">
+        <div id="menu">
+            {% block nav-global %}
+
+                <!-- MENU -->
+            {% load staticfiles %}
+            {% if user.is_staff %} <a href="{% url 'admin:index' %}">Admin</a> {% endif %}
+                {% if user.is_authenticated %}
+                    <a href="{% url 'issues:main' %}">Main</a>
+                    <a href="{% url 'issues:profile' user.pk %}">My Page</a>
+                     <a href="{% url 'issues:newProject' user.pk %}">New Project</a>
+                    <a href="{% url 'issues:forums'%}">Forum</a> {% endif %}
+                {% if not user.is_authenticated %}<a href="/accounts/login/?next=/issues/">login</a>{% endif %}
+
+                {% if user.is_authenticated %}<a href="/accounts/logout/?next=/issues/">logout</a>
+                    {% endif %}
+
+            {% endblock %}
+        </div>
+
+        <div id="content">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</body>
+</html>
