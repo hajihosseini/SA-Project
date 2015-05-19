@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block sidebar %} <style type="text/css"> </style> {% endblock %}
+
+{% block content %}
+    <style type="text/css">
+        .main { margin-left: 25px; margin-top: 30px;background:white;}
+        .title { font-size: 1.4em; margin-top: 10px; border-bottom: 0px solid #ccc; padding-left: 4px;background:white; }
+        .last { border: 0px; }
+        .title a { text-decoration: none; }
+        .button { background: #999; color: white; padding: 4px; text-decoration: none; }
+        td { border-bottom: 1px solid #ccc; }
+        #list { border: 1px solid #ccc; width: 700px;background:white; }
+    </style>
+
+    <div class="main">
+
+        {% if user.is_authenticated %}
+            <div id="list">
+            <table border="0" cellpadding="4" width="100%">
+                <tr>
+                    <td>Title</td>
+                    <td>Date</td>
+                    <td>Owner</td>
+                    <td>Description</td>
+                    <td></td>
+                </tr>
+                {% for p in object_list%}
+                <tr>
+                    <td><div class="title">{{ p.ProjectName }}</div></td>
+                    <td>{{ p.startDate }}</td>
+                    <td>{{ p.owner}}</td>
+                    <td>{{ p.projectDescription |linebreaksbr }}</td>
+
+                    <td><a class="button">VIEW</a></td>
+                </tr>
+                {% endfor %}
+             {%endif%}
+            </div>
+    </div>
+{% endblock %}
