@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block sidebar %}
+<style type="text/css"> </style> {% endblock %}
+
+{% block content %}
+    <style type="text/css">
+        .pagination { margin-top: 20px; margin-left: -20px; }
+        .main { margin-left: 25px; margin-top: 30px; width: 700px; }
+        .title { font-size: 1.4em; margin-top: 10px; padding-left: 0px; }
+        .title a { text-decoration: none; }
+        .button { background: #999; color: white; padding: 6px; text-decoration: none; float: right; }
+        .date { font-size: 0.8em; padding-left: 5px; }
+        .ppic { float: right;margin: 8px; padding: 8px; margin-bottom: 14px; background: white; }
+        .clear { clear: both; }
+        #reply { margin-top: 10px; width: 500px; }
+        .post {
+            margin: 1px; padding: 1px; border: 1px solid #ccc; margin-bottom: 1px; background: white;
+            }
+        .ttitle {
+            font-style: bold; font-size: 1.6em; border-bottom: 1px solid #ccc; margin-bottom: 9px;
+            padding-left: 10px; width: 700px;
+        }
+        #list { border: 1px solid #ccc; width: 700px;background:white; }
+        #back { margin: 5px; }
+    </style>
+
+<div class="main">
+
+    <!-- Title and backlink -->
+
+    <div class="ttitle">{{ topic.title }}</div>
+    <div id="back">
+        <a>&lt;&lt; back to list of topics</a>
+    </div>
+
+
+    <!-- Posts  -->
+
+    <div id="list">
+        {% for post in post_list %}
+            <div class="post">
+
+                <!-- Profile pic and info -->
+
+                <div class="ppic">
+                    <img src="{{ media_url }}{{ post.creator.profile.avatar }}" /> <br />
+                    {{ post.creator }}<br />
+                    Joined: {{ post.creator.date_joined|date:"M d Y" }}
+
+                </div>
+
+                <!-- Title, author and body -->
+
+                <span class="title">{{ post.title }}</span><br />
+                by {{ post.creator }} | <span class="date">{{ post.created }}</span> <br /><br />
+
+                {{ post.body|linebreaksbr }} <br />
+                <div class="clear"></div>
+
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Paginator and reply link -->
+
+    {% include "pagination.html" %}
+    <br />
+
+</div>
+{% endblock %}
