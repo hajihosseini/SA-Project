@@ -1,5 +1,4 @@
 from django.shortcuts import render
-
 # Create your views here.
 from .models import *
 from django.views import generic
@@ -27,7 +26,7 @@ class UserPageView(generic.DetailView):
 class EditProfile(generic.UpdateView):
     model = UserProfile
     fields = ['state']
-    template_name_suffix = '_update_form'
+    template_name = "userpage.html"
 
 class ForumList(generic.ListView):
     """desplays list of forums names and their last post."""
@@ -47,5 +46,12 @@ class TopicView(generic.ListView):
     list_model = Post
     detail_model = Topic
     model = Post
-    related_name  = "posts"
+    related_name = "posts"
     template_name = "topic.html"
+
+class NewProject(generic.CreateView):
+    model = Project
+    fields=['ProjectName','projectDescription','projectAccessType','startTime','finishedTime']
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super(NewProject, self).form_valid(form)
