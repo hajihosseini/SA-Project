@@ -1,8 +1,17 @@
+"""
+Django settings for project project.
 
+For more information on this file, see
+https://docs.djangoproject.com/en/1.7/topics/settings/
+
+For the full list of settings and their values, see
+https://docs.djangoproject.com/en/1.7/ref/settings/
+"""
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
@@ -18,7 +27,7 @@ TEMPLATE_DEBUG = True
 ALLOWED_HOSTS = []
 
 
-# all-auth settings {
+# Application definition
 TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.request",
     "allauth.account.context_processors.account",
@@ -37,7 +46,7 @@ AUTHENTICATION_BACKENDS = (
     # `allauth` specific authentication methods, such as login by e-mail
     "allauth.account.auth_backends.AuthenticationBackend",
 )
-# }
+
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -47,12 +56,12 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'issues',
     'django.contrib.sites',
-    'allauth',#allauth is an app for connecting to Linkedin
+    'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.linkedin',
 )
-#allauth settings : {
+
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -76,7 +85,6 @@ SOCIALACCOUNT_PROVIDERS = \
                          'picture-url',
                          'public-profile-url']}}
 AUTH_PROFILE_MODULE = 'issues.UserProfile'
-#}
 ROOT_URLCONF = 'project.urls'
 
 WSGI_APPLICATION = 'project.wsgi.application'
@@ -93,7 +101,7 @@ DATABASES = {
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
-#time zone , language and other settings {
+
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -103,8 +111,7 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-#}
-#static and media settings static is related to css files and media refers to things that user upload like avatar {
+
 STATIC_ROOT   = BASE_DIR + "/issues/static/"
 
 STATIC_URL    = '/static/'
@@ -113,9 +120,8 @@ MEDIA_ROOT    = BASE_DIR + "/media/"
 
 MEDIA_URL     = "/media/"
 
-SITE_ID = 1 # is needed in linkedin connection proceedure
+SITE_ID = 1
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
-#}
