@@ -1,0 +1,315 @@
+/* css for slider of main*/
+/* http://www.menucool.com */
+
+#sliderFrame, #sliderFrame div {
+    box-sizing: content-box;
+}
+#sliderFrame
+{
+    position:relative;
+    width:1150px;
+    margin:0 auto; /*center-aligned*/
+}
+
+#slider, #slider div.sliderInner {
+    width:1143px;height:500px;/* Must be the same size as the slider images */
+}
+
+#slider {
+	background:#fff url(loading.gif) no-repeat 50% 50%;
+	position:relative;
+	margin:0 auto; /*center-aligned*/
+    transform: translate3d(0,0,0);
+    box-shadow: 0px 1px 5px #999999;
+}
+
+/* image wrapper */
+#slider a.imgLink, #slider div.video {
+	z-index:2;
+	position:absolute;
+	top:0px;left:0px;border:0;padding:0;margin:0;
+	width:100%;height:100%;
+}
+#slider .video {
+	background:transparent url(video.png) no-repeat 50% 50%;
+}
+
+/* Caption styles */
+#slider div.mc-caption-bg, #slider div.mc-caption-bg2 {
+	position:absolute;
+	width:100%;
+	height:auto;
+	padding:10px 0;/* 10px will increase the height.*/
+	left:0px; /*if the caption needs to be aligned from right, specify by right instead of left. i.e. right:20px;*/
+	bottom:0px;/*if the caption needs to be aligned from top, specify by top instead of bottom. i.e. top:150px;*/
+	z-index:3;
+	overflow:hidden;
+	font-size: 0;
+}
+#slider div.mc-caption-bg
+{
+    /* NOTE: Its opacity is to be set through the sliderOptions.captionOpacity setting in the js-image-slider.js file.*/
+	background:Black;/* or any other colors such as White, or: background:none; */
+}
+#slider div.mc-caption-bg2 {
+    background:none;
+}
+#slider div.mc-caption {
+	font: bold 14px/20px Arial;
+	color:#EEE;
+	z-index:4;
+	text-align:center;
+    background:none;
+}
+#slider div.mc-caption a {
+	color:#FB0;
+}
+#slider div.mc-caption a:hover {
+	color:#DA0;
+}
+
+
+/* ------ built-in navigation bullets wrapper ------*/
+/* Note: check themes\2\js-image-slider.css to see how to hide nav bullets */
+#slider div.navBulletsWrapper  {
+    top:320px;/* Its position is relative to the #slider */
+	text-align:center;
+	background:none;
+	position:relative;
+	z-index:5;
+}
+
+/* each bullet */
+#slider div.navBulletsWrapper div
+{
+    width:11px; height:11px;
+    font-size:0;color:White;/*hide the index number in the bullet element*/
+    background:transparent url(bullet.png) no-repeat 0 0;
+    display:inline-block; *display:inline; zoom:1;
+    overflow:hidden;cursor:pointer;
+    margin:0 6px;/* set distance between each bullet*/
+}
+
+#slider div.navBulletsWrapper div.active {background-position:0 -11px;}
+
+
+/* --------- Others ------- */
+
+#slider div.loading
+{
+    width:100%; height:100%;
+    background:transparent url(loading.gif) no-repeat 50% 50%;
+    filter: alpha(opacity=60);
+    opacity:0.6;
+    position:absolute;
+    left:0;
+    top:0;
+    z-index:9;
+}
+
+#slider img, #slider>b, #slider a>b {
+	position:absolute; border:none; display:none;
+}
+
+#slider div.sliderInner {
+	overflow:hidden;
+	-webkit-transform: rotate(0.000001deg);/* fixed the Chrome not crop border-radius bug*/
+	position:absolute; top:0; left:0;
+}
+
+#slider>a, #slider video, #slider audio {display:none;}
+#slider div {-webkit-transform: translate3d(0,0,0);transform: translate3d(0,0,0);}
+/* end css for slider of main*/
+
+
+
+
+
+/* css for signin/up*/
+.prettyline {
+  height: 5px;
+  border-top: 0;
+  background: #c4e17f;
+  border-radius: 5px;
+  background-image: -webkit-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+  background-image: -moz-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+  background-image: -o-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+  background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+}
+
+/* end css for signin/up*/
+
+/* css for information*/
+#paragraph{
+    text-align: justify;
+    text-justify: inter-word;
+    font-size: 30px;
+}
+
+#paragraph2{
+
+    font-size: 30px;
+}
+
+#Boldparagraph{
+    text-align: justify;
+    text-justify: inter-word;
+    font-size: 50px;
+}
+/* end css for information*/
+
+/* css for social */
+
+#socialicon {
+    opacity: 0.4;
+    filter: alpha(opacity=40); /* For IE8 and earlier */
+}
+
+#socialicon:hover {
+    opacity: 1.0;
+    filter: alpha(opacity=100); /* For IE8 and earlier */
+}
+
+/* end css for social */
+
+
+
+
+/* css for navbar */
+
+/* demo page styles */
+body {
+    background:#eee;
+    margin:0;
+    padding:0;
+}
+.example {
+    background:#fff url(../images/clouds-in-blue-sky.jpg);
+    width:770px;
+    height:570px;
+    border:1px #000 solid;
+    margin:20px auto;
+    padding:15px;
+    border-radius:3px;
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;
+}
+
+
+/* main menu styles */
+#nav {
+    display:inline-block;
+    width:100%;
+    margin:0px auto;
+    padding:0;
+    background:#32CD32 url(../images/bg.png) repeat-x 0 -110px;
+
+    border-radius:30px; /*some css3*/
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+    box-shadow:0 2px 2px rgba(0,0,0, .5);
+    -moz-box-shadow:0 2px 2px rgba(0,0,0, .5);
+    -webkit-box-shadow:0 2px 2px rgba(0,0,0, .5);
+}
+#nav li {
+    margin:15px;
+    float:right;
+    position:relative;
+    list-style:none;
+}
+#nav a {
+    font-weight:bold;
+    font-size: 300%;
+    color:#e7e5e5;
+    text-decoration:none;
+    display:block;
+    padding:20px 20px;
+
+    border-radius:10px; /*some css3*/
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+    text-shadow:0 2px 2px rgba(0,0,0, .7);
+}
+
+/* selected menu element */
+#nav .current a, #nav li:hover > a {
+    background:#7788aa url(../images/bg.png) repeat-x 0 -20px;
+    color:#000;
+    border-top:1px solid #f8f8f8;
+
+    box-shadow:0 2px 2px rgba(0,0,0, .7); /*some css3*/
+    -moz-box-shadow:0 2px 2px rgba(0,0,0, .7);
+    -webkit-box-shadow:0 2px 2px rgba(0,0,0, .7);
+    text-shadow:0 2px 2px rgba(255,255,255, 0.7);
+}
+
+/* sublevels */
+#nav ul li:hover a, #nav li:hover li a {
+    background:none;
+    border:none;
+    color:#000;
+}
+#nav ul li a:hover {
+    background:#F3FF00 url(../images/bg.png) repeat-x 0 -100px;
+    color:#fff;
+
+    border-radius:10px; /*some css3*/
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+    text-shadow:0 2px 2px rgba(0,0,0, 0.7);
+}
+
+#nav ul li:first-child > a {
+    -moz-border-radius-topleft:10px; /*some css3*/
+    -moz-border-radius-topright:10px;
+    -webkit-border-top-left-radius:10px;
+    -webkit-border-top-right-radius:10px;
+}
+#nav ul li:last-child > a {
+    -moz-border-radius-bottomleft:10px; /*some css3*/
+    -moz-border-radius-bottomright:10px;
+    -webkit-border-bottom-left-radius:10px;
+    -webkit-border-bottom-right-radius:10px;
+}
+
+/* drop down */
+#nav li:hover > ul {
+    opacity:1;
+    visibility :visible;
+}
+#nav ul {
+    opacity:0;
+    visibility:hidden;
+    padding:0;
+    width:175px;
+    position:absolute;
+    background:#7CFF00 url(../images/bg.png) repeat-x 0 0;
+    border:1px solid #7788aa;
+
+    border-radius:10px; /*some css3*/
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+    box-shadow:0 2px 2px rgba(0,0,0, .5);
+    -moz-box-shadow:0 2px 2px rgba(0,0,0, .5);
+    -webkit-box-shadow:0 2px 2px rgba(0,0,0, .5);
+
+    -moz-transition:opacity .25s linear, visibility .1s linear .1s;
+    -webkit-transition:opacity .25s linear, visibility .1s linear .1s;
+    -o-transition:opacity .25s linear, visibility .1s linear .1s;
+    transition:opacity .25s linear, visibility .1s linear .1s;
+}
+#nav ul li {
+    float:none;
+    margin:0;
+}
+#nav ul a {
+    font-weight:normal;
+    text-shadow:0 2px 2px rgba(255,255,255, 0.7);
+}
+#nav ul ul {
+    left:160px;
+    top:0px;
+}
+
+/* end of navbar */
+
