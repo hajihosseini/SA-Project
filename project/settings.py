@@ -75,15 +75,14 @@ MIDDLEWARE_CLASSES = (
 TEMPLATE_DIRS = (
 # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
 )
-SOCIALACCOUNT_PROVIDERS = \
-    {'linkedin':
-      {'SCOPE': ['r_emailaddress'],
-       'PROFILE_FIELDS': ['id',
-                         'first-name',
-                         'last-name',
-                         'email-address',
-                         'picture-url',
-                         'public-profile-url']}}
+SOCIALACCOUNT_PROVIDERS = {'linkedin': {'SCOPE': ['r_basicprofile', 'r_emailaddress'],
+                  'PROFILE_FIELDS': ['id', 'first-name',
+                              'last-name',
+                              'email-address',
+                              'picture-url',
+                              'public-profile-url',
+                              'positions','location', 'headline']}
+        }
 AUTH_PROFILE_MODULE = 'issues.UserProfile'
 ROOT_URLCONF = 'project.urls'
 
