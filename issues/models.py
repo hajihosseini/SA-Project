@@ -64,16 +64,13 @@ class Task(models.Model):
 
 
 class UserProfile(models.Model):
-    #avatar = models.URLField(null=True)
+    avatar = models.URLField(null=True)
     state = models.BooleanField(default=True)
-    #fieldOfStudy = models.CharField(max_length=200)
-    #university = models.CharField(max_length=200)
-    #cityState = models.CharField(max_length=100)
-    #city = models.CharField(max_length=100)
+    location= models.CharField(null=True,max_length=100)
+    position= models.CharField(null=True,max_length=100)
     #grade = models.IntegerField(default=0)
     user = models.OneToOneField(User, related_name="profile")
     #skills = models.ManyToManyField(Skill,related_name="userSkills",null=True)
-    #tasks = models.ManyToManyField (Task,related_name="userTasks",null=True)
     @models.permalink
     def get_absolute_url(self):
         return ('issues:profile', None,{'pk':self.user.pk})
@@ -91,7 +88,24 @@ def user_post_save(sender,instance, created, **kwargs):
         p.save()
 
 post_save.connect(user_post_save, sender=User)
-
+from allauth.account.signals import user_logged_in
+from django.dispatch import receiver
+@receiver(user_logged_in)
+def user_logged_in_(request, user, sociallogin=None, **kwargs):
+    if sociallogin:
+        # Extract first / last names from social nets and store on User record
+        if sociallogin.account.provider == 'linkedin':
+            user.first_name = sociallogin.account.extra_data['first-name']
+            user.last_name = sociallogin.account.extra_data['last-name']
+            profile = UserProfile.objects.get(pk=user.pk)
+            if 'picture-url' in sociallogin.account.extra_data:
+                profile.avatar = sociallogin.account.extra_data['picture-url']
+            if 'location' in sociallogin.account.extra_data:
+                profile.location = sociallogin.account.extra_data['location']['name']
+            if 'headline' in sociallogin.account.extra_data:
+                profile.position = sociallogin.account.extra_data['headline']
+            profile.save()
+        user.save()
 #----------------------------------------------------------------------------------------------------------------------
 
 
