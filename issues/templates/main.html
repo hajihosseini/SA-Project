@@ -26,14 +26,16 @@
                     <td></td>
                 </tr>
                 {% for p in object_list%}
+                {% if p.projectAccessType%}
                 <tr>
                     <td><div class="title">{{ p.ProjectName }}</div></td>
-                    <td>{{ p.startDate }}</td>
-                    <td>{{ p.owner}}</td>
+                    <td>{{ p.startTime }}</td>
+                    <td><a href="{% url 'issues:profile' p.owner.pk %}">{{ p.owner}}</a></td>
                     <td>{{ p.projectDescription |linebreaksbr }}</td>
 
-                    <td><a class="button">VIEW</a></td>
+                    <td><a class="button" href="{% url 'issues:projectPage' p.pk %}">VIEW</a></td>
                 </tr>
+                {%endif%}
                 {% endfor %}
              {%endif%}
             </div>
