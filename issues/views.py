@@ -10,6 +10,7 @@ from django.template import RequestContext
 from django.contrib.auth import logout as auth_logout
 from django.contrib.messages.api import get_messages
 from django.core.mail import send_mail
+from django.shortcuts import get_object_or_404
 
 
 class Home(generic.ListView):
