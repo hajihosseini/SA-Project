@@ -9,6 +9,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib.auth import logout as auth_logout
 from django.contrib.messages.api import get_messages
+from django.core.mail import send_mail
 
 
 class Home(generic.ListView):
@@ -99,6 +100,12 @@ class NewPost(generic.CreateView):
         form.instance.creator = self.request.user
         form.instance.date = timezone.now()
         form.instance.topic = Topic.objects.get(pk=self.kwargs['pk'])
+        user=self.request.user
+        topic=Topic.objects.get(pk=self.kwargs['pk'])
+        message= "%s (%s) post in your topic :%s(%s)"% (user,'http://localhost:8000/issues/profile/%d/'%(user.id), topic,'http://localhost:8000/issues/topic/%d/'%(topic.id))
+        recipient_list = [topic.creator.email]
+        from_addr="pyissues.noreply@gmail.com"
+        send_mail("Post Notification", message, from_addr, recipient_list)
         return super(NewPost, self).form_valid(form)
 #----------------------------------------------------------------------------------------------------------------------
 
