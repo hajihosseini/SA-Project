@@ -14,7 +14,6 @@ from django.core.mail import send_mail
 
 class Home(generic.ListView):
     model = Project
-
     def get_context_data(self, **kwargs):
         context = super(Home, self).get_context_data(**kwargs)
         context['now'] = timezone.now()
@@ -28,11 +27,19 @@ class UserPageView(generic.DetailView):
     template_name = "userpage.html"
 #----------------------------------------------------------------------------------------------------------------------
 
+def editProfile(request, pk):
+    """ when a user press the like buttons the number of post creator's score will be increased
+        and an email will be sent to postcreator"""
+    user=request.user
 
-class EditProfile(generic.UpdateView):
-    model = UserProfile
-    fields = ['state']
-    template_name = "userpage.html"
+    if user.profile.state:
+        user.profile.state=False
+        user.profile.save()
+    else:
+        user.profile.state=True
+        user.profile.save()
+
+    return HttpResponseRedirect(reverse('issues:profile', args=(user.id,)))
 #----------------------------------------------------------------------------------------------------------------------
 
 
