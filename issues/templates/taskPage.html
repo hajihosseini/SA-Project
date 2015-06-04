@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+ <style type="text/css">
+                    .update { margin-left: 15px; margin-top: 30px; }
+                    #submit { float:inherit;}
+                </style>
+<h1>Task : {{ task.taskTitle }}</h1>
+<p>Task Description : {{ task.taskDescription }}</p>
+<p>Task Deadline : {{ task.deadline}}</p>
+<p>operators: <ul>{% for operator in task.operator.all %}<li><a href="{% url 'issues:profile' operator.pk %}">{{ operator }}</a></li>{% endfor %}</p></ul>
+<p>skills : <ul>{% for skill in task.skills.all %}<li>{{skill}} </li>{% endfor %}</ul></p>
+{%if task.done%}
+<p>this task is done</p>
+<a href="{% url 'issues:taskDone' task.pk %}" target="_self" >Undone the task</a>
+<br>
+{%else%}
+<p>this task is not done</p>
+<a href="{% url 'issues:taskDone' task.pk %}" target="_self" >Done the task</a>
+<br>
+{%endif%}
+
+<a href="{% url 'issues:projectPage' task.project.pk %}"> &lt;&lt;Back to Project Page</a>
+{% endblock %}
