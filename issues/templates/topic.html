@@ -29,42 +29,50 @@
 
     <!-- Title and backlink -->
 
-    <div class="ttitle">{{ topic.title }}</div>
+    <div class="ttitle">{{topic.forum.title}}>>{{ topic.title }}:</div>
     <div id="back">
-        <a>&lt;&lt; back to list of topics</a>
+        <a href="{% url 'issues:forum' object.forum.pk %}"> &lt;&lt;Back to Forum Page</a>
     </div>
 
-
-    <!-- Posts  -->
-
     <div id="list">
-        {% for post in post_list %}
+        {% for post in page_obj %}
             <div class="post">
 
-                <!-- Profile pic and info -->
+                <!-- Profile pic and info
 
                 <div class="ppic">
                     <img src="{{ media_url }}{{ post.creator.profile.avatar }}" /> <br />
                     {{ post.creator }}<br />
                     Joined: {{ post.creator.date_joined|date:"M d Y" }}
 
-                </div>
-
+                </div>-->
                 <!-- Title, author and body -->
 
                 <span class="title">{{ post.title }}</span><br />
                 by {{ post.creator }} | <span class="date">{{ post.created }}</span> <br /><br />
-
                 {{ post.body|linebreaksbr }} <br />
                 <div class="clear"></div>
 
             </div>
         {% endfor %}
     </div>
+    <p><a class="button" href="{% url 'issues:newPost' topic.pk %}">Reply</a></p>
 
-    <!-- Paginator and reply link -->
+        <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
 
-    {% include "pagination.html" %}
+            <span class="current">
+                Page {{ page_obj.number }} of {{ paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+            {% endif %}
+        </span>
+    </div>
     <br />
 
 </div>
