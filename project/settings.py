@@ -124,3 +124,9 @@ SITE_ID = 1
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_USER = "pyissues.noreply@gmail.com"
+EMAIL_HOST_PASSWORD = "pyissues123"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
