@@ -1,14 +1,4 @@
 {% extends "base.html" %}
-{% if user.is_authenticated %}
-                    <a href="{% url 'issues:main' %}">Main</a>
-                    <a href="{% url 'issues:profile' user.pk %}">Edit profile</a>
-                    <a href="{% url 'issues:viewprofile' user.pk %}">My Page</a>
-                    <a href="{% url 'issues:forums' %}">Forum</a>
-                {% endif %}
-
-                {% if not user.is_authenticated %}<a href="/accounts/login/?next=/issues/">login</a> {% endif %}
-
-                {% if user.is_authenticated %}<a href="/accounts/logout/?next=/issues/">logout</a>{% endif %}
 {% block content %}
     <style type="text/css">
         .main { margin-left: 25px; margin-top: 30px;background:white;}
@@ -25,28 +15,36 @@
         <div id="list">
         <table border="0" cellpadding="4" width="100%">
             <tr>
-                <td></td>
-                <td>Posts</td>
-                <td>Last post</td>
+                <td>Title</td>
                 <td></td>
             </tr>
-
-            <!-- Forums  -->
             {% for forum in forum_list %}
-            <tr{% if forloop.last %}class="last"{% endif %}>
+            <tr>
                 <td>
-                    <div class="title"> <a href="{% url 'issues:forum' dpk=forum.pk %}">{{ forum.title }}</a></div>
+                    <div class="title"> <a href="{% url 'issues:forum' pk=forum.pk %}">{{ forum.title }}</a></div>
 
                 </td>
-                <td>{{ forum.numPosts }}</td>
-                <td>{{ forum.lastPost.short|linebreaksbr }}</td>
-                <td><a class="button" href="{% url 'issues:forum' dpk=forum.pk %}">VIEW</a></td>
+                <td><a class="button" href="{% url 'issues:forum' pk=forum.pk %}">VIEW</a></td>
             </tr>
-
             {% endfor %}
             </table>
         </div>
+        <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
 
+            <span class="current">
+                Page {{ page_obj.number }} of {{ paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+            {% endif %}
+        </span>
+    </div>
     </div>
 
 {% endblock %}
+
