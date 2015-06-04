@@ -16,6 +16,8 @@
     <div class="main">
 
         {% if user.is_authenticated %}
+
+            <!--proje haye public-->
             <div id="list">
             <table border="0" cellpadding="4" width="100%">
                 <tr>
@@ -25,8 +27,6 @@
                     <td>Description</td>
                     <td></td>
                 </tr>
-
-                <!--proje haye public-->
                 {% for p in object_list%}
                 {% if p.projectAccessType%}
                 <tr>
@@ -39,10 +39,22 @@
                 </tr>
                 {%endif%}
                 {% endfor %}
+            </table>
+            </div>
 
-                <!--proje hayi k khodesh sakhte-->
+            <!--proje hayi k khodesh sakhte-->
+            <div id="list">
+            <table border="0" cellpadding="4" width="100%">
+                <tr>
+                    <td>Title</td>
+                    <td>Date</td>
+                    <td>Owner</td>
+                    <td>Description</td>
+                    <td></td>
+                </tr>
                 {% for p in object_list%}
                 {% ifequal user p.owner %}
+                {% ifnotequal 100 p.progress %}
                 <tr>
                     <td><div class="title">{{ p.ProjectName }}</div></td>
                     <td>{{ p.startTime }}</td>
@@ -51,9 +63,12 @@
 
                     <td><a class="button" href="{% url 'issues:projectPage' p.pk %}">VIEW</a></td>
                 </tr>
+                {% endifnotequal %}
                 {% endifequal %}
                 {% endfor %}
-            </div>
+                </table>
+                </div>
+
         {%endif%}
     </div>
 {% endblock %}
