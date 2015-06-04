@@ -40,6 +40,17 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 )
 
+EMAIL_USE_TLS = True
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_USER = "pycommunitynoreply@gmail.com"
+EMAIL_HOST_PASSWORD = """"
+Django settings for PyCommunity project.
+For more information on this file, see
+https://docs.djangoproject.com/en/1.6/topics/settings/
+For the full list of settings and their values, see
+https://docs.djangoproject.com/en/1.6/ref/settings/
+"""
+
 AUTHENTICATION_BACKENDS = (
     # Needed to login by username in Django admin, regardless of `allauth`
     "django.contrib.auth.backends.ModelBackend",
@@ -125,3 +136,10 @@ SITE_ID = 1
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_USER = "pycommunitynoreply@gmail.com"
+EMAIL_HOST_PASSWORD = "PASSWORD"
+EMAIL_PORT = 587"
+EMAIL_PORT = 587
