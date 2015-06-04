@@ -156,9 +156,24 @@ class ProjectView(generic.detail.SingleObjectMixin, generic.ListView):
 
 #----------------------------------------------------------------------------------------------------------------------
 
-
-class TaskDone(generic.UpdateView):
+class TaskView(generic.DetailView):
     model = Task
-    fields = ['done']
-    template_name = 'taskPage.html'
-#----------------------------------------------------------------------------------------------------------------------
+    template_name = "taskPage.html"
+def taskDone(request, pk):
+    """ when a user press the like buttons the number of post creator's score will be increased
+        and an email will be sent to postcreator"""
+    task = get_object_or_404(Task, pk=pk)
+    project = task.project
+    user = request.user
+    if task.done:
+        task.done = False
+    else:
+        task.done = True
+    task.save()
+    message= "%s (%s)has Done The task:%s(%s)"% (user,'http://localhost:8000/issues/profile/%d/'%(user.id),task,'http://localhost:8000/issues/task/%d/'%(task.id))
+    recipient_list = [project.owner.email]
+    from_addr="pyissues.noreply@gmail.com"
+    send_mail("Task Done Notification", message, from_addr, recipient_list)
+
+    return HttpResponseRedirect(reverse('issues:taskPage', args=(task.id,)))
+#--------------------------------------------------------------------------------------------------------------------------
