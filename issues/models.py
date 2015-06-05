@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.db.models.signals import post_save
 from django.utils import timezone
 from django.core.urlresolvers import reverse
-
+from django.core.mail import send_mail
 
 class Skill(models.Model):
     skillName = models.CharField(max_length=200)
@@ -68,7 +68,7 @@ class UserProfile(models.Model):
     state = models.BooleanField(default=True)
     location= models.CharField(null=True,max_length=100)
     position= models.CharField(null=True,max_length=100)
-    #grade = models.IntegerField(default=0)
+    grade = models.IntegerField(default=0)
     user = models.OneToOneField(User, related_name="profile")
     #skills = models.ManyToManyField(Skill,related_name="userSkills",null=True)
     @models.permalink
@@ -157,3 +157,27 @@ class Post(models.Model):
     def get_absolute_url(self) :
         return reverse('issues:topic',args=[self.topic.pk])
 #----------------------------------------------------------------------------------------------------------------------
+
+
+class Comment(models.Model):
+    creator = models.ForeignKey(User, blank=True, null=True)
+    body = models.TextField(max_length=1000)
+    task = models.ForeignKey(Task, related_name="comment",  blank=True, null=True)
+    date = models.DateTimeField(auto_now_add=True)
+    class Meta:
+        ordering = ["-date"]
+    def __unicode__(self):
+        return u"%s: %s" % (self.profile, self.body[:60])
+
+    def get_absolute_url(self) :
+        """ it gets the absolute url of current topic page, this method has been used in views"""
+        return reverse('issues:taskPage',args=[self.task.pk])
+
+    #def save(self, *args, **kwargs):
+        #if self.creator!=self.task.user:
+            #"""email when a wallpost is added."""
+            #message = "new comment  on task %s  by '%s'" % ( self.task ,self.creator)
+            #from_addr = "pycommunity.noreply@gmail.com"
+            #recipient_list = [o.email for o in self.task.operator]
+            #send_mail("New Wallpost Added", message, from_addr, recipient_list)
+        #super(Comment, self).save(*args, **kwargs)
