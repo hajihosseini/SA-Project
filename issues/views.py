@@ -23,9 +23,22 @@ class Home(generic.ListView):
 #----------------------------------------------------------------------------------------------------------------------
 
 
-class UserPageView(generic.DetailView):
-    model = UserProfile
+class UserPageView(generic.detail.SingleObjectMixin, generic.ListView):
+    paginate_by = 20
     template_name = "userpage.html"
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object(queryset=UserProfile.objects.all())
+        return super(UserPageView, self).get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(UserPageView, self).get_context_data(**kwargs)
+        context['operator'] = self.object
+        return context
+
+    def get_queryset(self):
+        return self.object.user.owner.all()
+
 #----------------------------------------------------------------------------------------------------------------------
 
 def editProfile(request, pk):
@@ -157,9 +170,23 @@ class ProjectView(generic.detail.SingleObjectMixin, generic.ListView):
 
 #----------------------------------------------------------------------------------------------------------------------
 
-class TaskView(generic.DetailView):
-    model = Task
+
+class TaskView(generic.detail.SingleObjectMixin, generic.ListView):
+    paginate_by = 20
     template_name = "taskPage.html"
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object(queryset=Task.objects.all())
+        return super(TaskView, self).get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(TaskView, self).get_context_data(**kwargs)
+        context['task'] = self.object
+        return context
+
+    def get_queryset(self):
+        return self.object.comment.all()
+#----------------------------------------------------------------------------------------------------------------------
 def taskDone(request, pk):
     """ when a user press the like buttons the number of post creator's score will be increased
         and an email will be sent to postcreator"""
@@ -168,13 +195,38 @@ def taskDone(request, pk):
     user = request.user
     if task.done:
         task.done = False
+        message= "%s (%s)has unDone The task:%s(%s)"% (user,'http://localhost:8000/issues/profile/%d/'%(user.id),task,'http://localhost:8000/issues/task/%d/'%(task.id))
+        task.save()
     else:
         task.done = True
-    task.save()
-    message= "%s (%s)has Done The task:%s(%s)"% (user,'http://localhost:8000/issues/profile/%d/'%(user.id),task,'http://localhost:8000/issues/task/%d/'%(task.id))
+        message= "%s (%s)has Done The task:%s(%s)"% (user,'http://localhost:8000/issues/profile/%d/'%(user.id),task,'http://localhost:8000/issues/task/%d/'%(task.id))
+        task.save()
     recipient_list = [project.owner.email]
     from_addr="pyissues.noreply@gmail.com"
     send_mail("Task Done Notification", message, from_addr, recipient_list)
 
     return HttpResponseRedirect(reverse('issues:taskPage', args=(task.id,)))
-#--------------------------------------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------------------------
+
+def upgrade(request,pk):
+    if request.POST.get('grade'):
+        grade = request.GET.get('grade')
+        task = get_object_or_404(Task, pk=pk)
+        for o in task.operator:
+            print(o)
+            o.profile.grade+=grade
+            o.save()
+
+    return HttpResponseRedirect(reverse('issues:taskPage', args=(task.id,)))
+#----------------------------------------------------------------------------------------------------------------------
+
+
+class NewComment (generic.CreateView):
+    model = Comment
+    fields = ["body"]
+
+    def form_valid(self, form):
+        form.instance.creator = self.request.user
+        form.instance.task = Task.objects.get(pk=self.kwargs['pk'])
+        form.instance.date = timezone.now()
+        return super(NewComment, self).form_valid(form)
