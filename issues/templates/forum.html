@@ -1,51 +1,191 @@
-{% extends "base.html" %}
-{% block content %}
-    <style type="text/css">
-        .main { margin-left: 25px; margin-top: 30px;background:white;}
-        .title { font-size: 1.4em; margin-top: 10px; border-bottom: 0px solid #ccc; padding-left: 4px;background:white; }
-        .last { border: 0px; }
-        .title a { text-decoration: none; }
-        .button { background: #999; color: white; padding: 4px; text-decoration: none; }
-        td { border-bottom: 1px solid #ccc; }
-        #list { border: 1px solid #ccc; width: 700px;background:white; }
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>ISSUES</title>
+    <!-- CSS -->
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap-theme.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/extra.css">
+    <link href="../static/css/generic.css" rel="stylesheet" type="text/css" />
+    <link href="../static/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        body {
+        	background-image: url("../static/img/Light-Green-Abstract-Background.jpg");
+
+        }
     </style>
-<div class="main">
-    <div class="title">{{forum.title}}:</div>
-    <p></p><a class="button" href="{% url 'issues:newTopic' forum.pk %}">+Add New Topic</a></p>
-    <div id="list">
-        <table border="0" cellpadding="4" width="100%">
-                <tr>
-                    <td>Title</td>
-                    <td>Creator</td>
-                    <td>Date</td>
-                    <td></td>
-                </tr>
-      {% for topic in page_obj %}
-        <tr>
-            <td>{{ topic.title }}</td>
-            <td><a href="{% url 'issues:profile' topic.creator.pk %}">{{ topic.creator}}</a></td>
-            <td>{{topic.date}}</td>
-            <td><a class="button" href="{% url 'issues:topic' topic.pk %}">VIEW</a></td>
-        </tr>
+</head>
+<body>
+<!-- javascript -->
+    <script src="../static/js/jquery.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/npm.js"></script>
+    <script src="../static/js/extra.js"></script>
+    <br><br><br>
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column"> <!-- title-->
+                <hr class="prettyline">
+                            <center>
+                            <div class="row clearfix">
+                                <div class="col-md-12 column">
+                                    <div class="row clearfix">
 
-      {% endfor %}
+                                        <div class="col-md-8 column">
+                                            <img src="../static/img/title.jpg" alt="Logo" style="width:700px;height:200px">
+                                        </div>
 
-        </table>
+                                         <div class="col-md-4 column">
+                                            <img src="../static/img/logooo.jpg" alt="Image Logo" style="width:250px;height:200px">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                                <em></em>
+                            </center>
+                            <hr class="prettyline">
+
+            </div>
+        </div>
+
+        <div class="row clearfix">
+            <div class="col-md-12 column"><!-- navbar-->
+
+                {% block nav-global %}
+                    <ul id="nav">
+                        {% load staticfiles %}
+                            {% if user.is_staff %}
+                                <li><a href="{% url 'admin:index' %}">مدیر</a></li>
+                        {% endif %}
+                        {% if user.is_authenticated %}
+                                <li><a href="{% url 'issues:home' %}">خانه</a></li>
+                                <li><a href="{% url 'issues:profile' user.pk %}">صفحه شخصی</a></li>
+                                <li><a href="{% url 'issues:newProject' user.pk %}">پروژه جدید</a></li>
+                                 <li><a href="{% url 'issues:forums'%}">پرسش و پاسخ</a></li>
+                        {% endif %}
+                        {% if not user.is_authenticated %}
+                                <li><a href="/accounts/login/?next=/issues/">ورود</a></li>
+                        {% endif %}
+
+                        {% if user.is_authenticated %}
+                            <li><a href="/accounts/logout/?next=/issues/">خروج</a></li>
+                        {% endif %}
+
+
+                    </ul>
+                {% endblock %}
+
+             </div>
+
+            </div>
+        </div>
+            <br><br><br><br><br>
+
+
+
+        <div class="row clearfix">
+            <div class="col-md-12 column"><!-- text-->
+                <div id="pro">
+
+                  {% if user.is_authenticated %}
+                   <div class="container">
+                      <div class="row">
+
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+
+
+                          <div class="panel panel-info">
+                            <div class="panel-heading">
+                              <h3 class="panel-title">{{forum.title}}</h3>
+                            </div>
+                            <div class="panel-body">
+                              <div class="row">
+                                <div class="col-md-3 col-lg-3 " align="center"> <img src="#"  weight="10" height="10" class="img-circle"> </div>
+
+                                <div class=" col-md-9 col-lg-9 ">
+                                  <table class="table table-user-information">
+                                    <tbody>
+                                      <table border="0" cellpadding="4" width="100%">
+                                                <tr>
+                                                    <td></td>
+                                                    <td><h2>: تاریخ</h2></td>
+                                                    <td><h2>: سازنده</h2></td>
+                                                    <td><h2>: عنوان</h2></td>
+
+
+                                                </tr>
+                                                  {% for topic in page_obj %}
+                                                    <tr>
+                                                        <td><a class="btn btn-primary" href="{% url 'issues:topic' topic.pk %}">VIEW</a></td>
+                                                        <td>{{topic.date}}</td>
+                                                        <td><a href="{% url 'issues:profile' topic.creator.pk %}">{{ topic.creator}}</a></td>
+                                                        <td>{{ topic.title }}</td>
+
+                                                    </tr>
+
+                                                  {% endfor %}
+
+                                        </table>
+                                  </table>
+                                    <br><br><br>
+                                       <a class="btn btn-primary" href="{% url 'issues:newTopic' forum.pk %}">ضافه کردن عوان جدید</a>
+                                    <div class="pagination">
+                                        <span class="step-links">
+                                            {% if page_obj.has_previous %}
+                                                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                                            {% endif %}
+
+                                            <span class="current">
+                                                Page {{ page_obj.number }} of {{ paginator.num_pages }}.
+                                            </span>
+
+                                            {% if page_obj.has_next %}
+                                                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                                            {% endif %}
+                                        </span>
+                                    </div>
+
+
+                                </div>
+
+
+
+                              </div>
+                            </div>
+
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {% endif %}
+
+                </div>
+                </div>
+            </div>
+
+                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+
+
+        <div class="row clearfix">
+            <div class="col-md-12 column"><!-- social-->
+                        <center>
+
+                            <br><br><br><br>
+                            <hr class="prettyline">
+                            <a href="http://www.facebook.com"><img id="socialicon" src="../static/img/facebook.png" width="145" height="113" alt="Facebook" ></a>
+                            <a href="http://www.twitter.com"><img id="socialicon" src="../static/img/Twitter-px.png" width="145" height="113" alt="Twitter"></a>
+                            <a href="http://www.github.com"><img id="socialicon" src="../static/img/github2.jpg" width="145" height="113" alt="Github"></a>
+                            <a href="http://www.linkedin.com"><img id="socialicon" src="../static/img/linkedin.png" width="145" height="113" alt="Linkedin"></a>
+                            <a href="http://www.youtube.com"><img id="socialicon" src="../static/img/youtube.png" width="145" height="113" alt="Youtube"></a>
+                            <a href="http://www.plus.google.com"><img id="socialicon" src="../static/img/googleplus-revised.png" width="145" height="113" alt="Google+"></a>
+                            <a href="http://www.gmail.com"><img id="socialicon" src="../static/img/gmail-icon.png" width="145" height="113" alt="Gmail"></a>
+                            <a href="http://www.yahoo.com"><img id="socialicon" src="../static/img/yahoo-icon.png" width="145" height="113" alt="Yahoo"></a>
+                        </center>
+            </div>
+        </div>
     </div>
-    <div class="pagination">
-        <span class="step-links">
-            {% if page_obj.has_previous %}
-                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-            {% endif %}
-
-            <span class="current">
-                Page {{ page_obj.number }} of {{ paginator.num_pages }}.
-            </span>
-
-            {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">next</a>
-            {% endif %}
-        </span>
-    </div>
-    </div>
-{% endblock %}
+</body>
+</html>
