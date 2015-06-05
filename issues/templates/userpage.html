@@ -10,21 +10,26 @@
 </ul>
 {% endfor %}
 {% endif %}-->
- <style type="text/css">
-                    .update { margin-left: 15px; margin-top: 30px; }
-                    #submit { float:inherit;}
-                </style>
+     <style type="text/css">
+        .main { margin-left: 25px; margin-top: 30px;background:white;}
+        .title { font-size: 1.4em; margin-top: 10px; border-bottom: 0px solid #ccc; padding-left: 4px;background:white; }
+        .last { border: 0px; }
+        .title a { text-decoration: none; }
+        .button { background: #999; color: white; padding: 4px; text-decoration: none; }
+        td { border-bottom: 1px solid #ccc; }
+        #list { border: 1px solid #ccc; width: 700px;background:white; }
+    </style>
 <center>
                     <div class="ppic"><img src="{{ userprofile.avatar }}"  alt="No Profile picture" height="200" width="200"/><br /></div>
             <br />
                     <div class="title">Name:</div>
-                    <div class="detail"> {{ user.first_name}}<br /></div>
-                    <div class="title">city:</div>
-                    <div class="detail"> {{ userprofile.city}}<br /></div>
+                    <div class="detail"> {{ user.first_name}} {{user.last_name}}<br /></div>
+                    <div class="title">location:</div>
+                    <div class="detail"> {{ userprofile.location}}<br /></div>
                     <div class="title">Email Address:</div>
                     <div class="detail">{{ userprofile.user.email }}<br /></div>
                     <div class="title">grades:</div>
-                    <div class="detail">{{ userprofile.grades }}<br /></div>
+                    <div class="detail">{{ userprofile.grade }}<br /></div>
                     <div class="title">state:</div>
                     {%if userprofile.state%}
                         <div class="detail">available<br /></div>
@@ -33,20 +38,55 @@
                     {%endif%}
                     {%ifequal userprofile.user.pk user.pk %}
                     <div class="update">
-                         <form action="" method="post" >{% csrf_token %}
-                               <table>
-                                    {{form.as_table }}
-                                </table>
-                                <input type="submit" value="Update" />
-                            </form>
-                        <br>
+                         <a href="{% url 'issues:editprofile' user.pk %}" target="_self" >statechange</a>
                     </div>
                     {%endifequal%}
-                    <div class="title">fielsofstudy:</div>
-                    <div class="detail">{{ userprofile.fieldOfStudy|linebreaksbr }}<br /></div>
+                    <br>
+                    <div class="title">headline:</div>
+                    <div class="detail">{{ userprofile.position|linebreaksbr }}<br /></div>
                     <div class="title">Last Login:</div>
                     <div class="detail">{{ userprofile.user.last_login|date:"M d Y" }}<br /></div>
                     <div class="title">Joined: </div>
+                    <div class="detail">{{ userprofile.user.date_joined|date:"M d Y" }}<br /></div>
 
 </center>
+<div class="main">
+            <div id="list">
+            <table border="0" cellpadding="4" width="100%">
+                <tr>
+                    <td>Title</td>
+                    <td>Date</td>
+                    <td>Owner</td>
+                    <td>Description</td>
+                    <td></td>
+                </tr>
+{% for p in page_obj %}
+                {%ifequal p.progressUpdate 100%}
+                {% if p.projectAccessType%}
+                <tr>
+                    <td><div class="title">{{ p.ProjectName }}</div></td>
+                    <td>{{ p.startTime }}</td>
+                    <td><a href="{% url 'issues:profile' p.owner.pk %}">{{ p.owner}}</a></td>
+                    <td>{{ p.projectDescription |linebreaksbr }}</td>
+
+                    <td><a class="button" href="{% url 'issues:projectPage' p.pk %}">VIEW</a></td>
+                </tr>
+                {%else%}
+                    {% ifequal user p.owner %}
+                        <tr>
+                        <td><div class="title">{{ p.ProjectName }}</div></td>
+                        <td>{{ p.startTime }}</td>
+                        <td><a href="{% url 'issues:profile' p.owner.pk %}">{{ p.owner}}</a></td>
+                        <td>{{ p.projectDescription |linebreaksbr }}</td>
+
+                        <td><a class="button" href="{% url 'issues:projectPage' p.pk %}">VIEW</a></td>
+                </tr>
+                    {%endifequal%}
+                {%endif%}
+                {%endifequal%}
+                {% endfor %}
+                </table>
+                </div>
+    </div>
+
 {%endblock%}
