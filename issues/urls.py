@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required as LR
 from .models import *
 from .views import *
 urlpatterns = patterns('',
+    url(r"^newComment/(?P<pk>\d+)/$", LR(NewComment.as_view()), name="newComment"),
+    url(r"^(?P<pk>\d+)/upgrade/$", LR(upgrade), name="upgrade"),
     url(r"^taskPage/(?P<pk>\d+)/$", LR(TaskView.as_view()), name="taskPage"),
     url(r"^(?P<pk>\d+)/taskDone/$", LR(taskDone), name="taskDone"),
     url(r"^newTopic/(?P<pk>\d+)/$", LR(NewTopic.as_view()), name="newTopic"),
@@ -17,3 +19,4 @@ urlpatterns = patterns('',
     url(r"^forums$", LR(ForumList.as_view()), name="forums"),
     url(r"^$", Home.as_view(), name="home"),
 )
+
