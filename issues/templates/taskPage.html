@@ -18,6 +18,17 @@
 <a href="{% url 'issues:taskDone' task.pk %}" target="_self" >Done the task</a>
 <br>
 {%endif%}
+    <p><a class="button" href="{% url 'issues:newComment' task.pk %}">+ Add New Comment</a></p>
 
+<form method="POST">
+    grade: <input type="number" name="grade" min="1" max="10"><br/>
+    <input href="{% url 'issues:upgrade' task.pk %} "type="submit" value="Submit" />
+</form><br/><br/>
+{% for comment in page_obj %}
+    <ul>
+
+      <li>{{comment.creator}}|{{comment.date}}<br>{{comment.body}}</li>
+    </ul>
+{%endfor%}
 <a href="{% url 'issues:projectPage' task.project.pk %}"> &lt;&lt;Back to Project Page</a>
 {% endblock %}
