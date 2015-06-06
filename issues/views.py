@@ -11,6 +11,7 @@ from django.contrib.auth import logout as auth_logout
 from django.contrib.messages.api import get_messages
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404
+from django.core.context_processors import csrf
 
 
 class Home(generic.ListView):
@@ -147,7 +148,6 @@ class NewTask(generic.CreateView):
 
     def form_valid(self, form):
         form.instance.project = Project.objects.get(pk=self.kwargs['pk'])
-        #form.instance.progress = 0
         return super(NewTask, self).form_valid(form)
 #-----------------------------------------------------------------------------------------------------------------------
 
@@ -209,15 +209,16 @@ def taskDone(request, pk):
 #----------------------------------------------------------------------------------------------------------------------
 
 def upgrade(request,pk):
-    if request.POST.get('grade'):
-        grade = request.GET.get('grade')
-        task = get_object_or_404(Task, pk=pk)
-        for o in task.operator:
-            print(o)
-            o.profile.grade+=grade
-            o.save()
-
-    return HttpResponseRedirect(reverse('issues:taskPage', args=(task.id,)))
+    task = get_object_or_404(Task, pk=pk)
+    grade = request.POST['grade']
+    print (type(grade))
+    for o in task.operator.all():
+        print ("profile",type(o.profile.grade))
+        o.profile.grade += int(grade)
+        o.profile.save()
+    task.completed=True
+    task.save()
+    return HttpResponseRedirect(reverse('issues:projectPage', args=(task.project.id,)))
 #----------------------------------------------------------------------------------------------------------------------
 
 
