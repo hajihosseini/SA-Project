@@ -1,74 +1,206 @@
-{% extends "base.html" %}
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>ISSUES</title>
+    <!-- CSS -->
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap-theme.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/extra.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/z.css">
+    <link href="../static/css/generic.css" rel="stylesheet" type="text/css" />
+    <link href="../static/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        body {
+        	background-image: url("../static/img/Light-Green-Abstract-Background.jpg");
 
-{% block sidebar %} <style type="text/css"> </style> {% endblock %}
-
-{% block content %}
-    <style type="text/css">
-        .main { margin-left: 25px; margin-top: 30px;background:white;}
-        .title { font-size: 1.4em; margin-top: 10px; border-bottom: 0px solid #ccc; padding-left: 4px;background:white; }
-        .last { border: 0px; }
-        .title a { text-decoration: none; }
-        .button { background: #999; color: white; padding: 4px; text-decoration: none; }
-        td { border-bottom: 1px solid #ccc; }
-        #list { border: 1px solid #ccc; width: 700px;background:white; }
+        }
     </style>
+</head>
+<body>
+<!-- javascript -->
+    <script src="../static/js/jquery.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/npm.js"></script>
+    <script src="../static/js/extra.js"></script>
+    <script src="../static/js/z.js"></script>
 
-    <div class="main">
+    <br><br><br>
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column"> <!-- title-->
+                <hr class="prettyline">
+                            <center>
+                            <div class="row clearfix">
+                                <div class="col-md-12 column">
+                                    <div class="row clearfix">
 
-        {% if user.is_authenticated %}
+                                        <div class="col-md-8 column">
+                                            <img src="../static/img/title.jpg" alt="Logo" style="width:700px;height:200px">
+                                        </div>
 
-            <!--proje haye public-->
-            <div id="list">
-            <table border="0" cellpadding="4" width="100%">
-                <tr>
-                    <td>Title</td>
-                    <td>Date</td>
-                    <td>Owner</td>
-                    <td>Description</td>
-                    <td></td>
-                </tr>
-                {% for p in object_list%}
-                {% if p.projectAccessType%}
-                <tr>
-                    <td><div class="title">{{ p.ProjectName }}</div></td>
-                    <td>{{ p.startTime }}</td>
-                    <td><a href="{% url 'issues:profile' p.owner.pk %}">{{ p.owner}}</a></td>
-                    <td>{{ p.projectDescription |linebreaksbr }}</td>
+                                         <div class="col-md-4 column">
+                                            <img src="../static/img/logooo.jpg" alt="Image Logo" style="width:250px;height:200px">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                                <em></em>
+                            </center>
+                            <hr class="prettyline">
 
-                    <td><a class="button" href="{% url 'issues:projectPage' p.pk %}">VIEW</a></td>
-                </tr>
-                {%endif%}
-                {% endfor %}
-            </table>
             </div>
+        </div>
 
-            <!--proje hayi k khodesh sakhte-->
-            <div id="list">
-            <table border="0" cellpadding="4" width="100%">
-                <tr>
-                    <td>Title</td>
-                    <td>Date</td>
-                    <td>Owner</td>
-                    <td>Description</td>
-                    <td></td>
-                </tr>
-                {% for p in object_list%}
-                {% ifequal user p.owner %}
-                {% ifnotequal 100 p.progress %}
-                <tr>
-                    <td><div class="title">{{ p.ProjectName }}</div></td>
-                    <td>{{ p.startTime }}</td>
-                    <td><a href="{% url 'issues:profile' p.owner.pk %}">{{ p.owner}}</a></td>
-                    <td>{{ p.projectDescription |linebreaksbr }}</td>
+        <div class="row clearfix">
+            <div class="col-md-12 column"><!-- navbar-->
 
-                    <td><a class="button" href="{% url 'issues:projectPage' p.pk %}">VIEW</a></td>
-                </tr>
-                {% endifnotequal %}
-                {% endifequal %}
-                {% endfor %}
-                </table>
-                </div>
+                {% block nav-global %}
+                    <ul id="nav">
+                        {% load staticfiles %}
+                            {% if user.is_staff %}
+                                <li><a href="{% url 'admin:index' %}">مدیر</a></li>
+                        {% endif %}
+                        {% if user.is_authenticated %}
+                                <li><a href="{% url 'issues:home' %}">خانه</a></li>
+                                <li><a href="{% url 'issues:profile' user.pk %}">صفحه شخصی</a></li>
+                                <li><a href="{% url 'issues:newProject' user.pk %}">پروژه جدید</a></li>
+                        {% endif %}
+                        {% if not user.is_authenticated %}
+                                <li><a href="/accounts/login/?next=/issues/">ورود</a></li>
+                        {% endif %}
 
-        {%endif%}
+                        {% if user.is_authenticated %}
+                            <li><a href="/accounts/logout/?next=/issues/">خروج</a></li>
+                        {% endif %}
+
+
+                    </ul>
+                {% endblock %}
+
+             </div>
+
+            </div>
+            <br><br><br><br><br>
+
+	<div class="row clearfix">               <!-- mohtavaye barname -->
+		<div class="col-md-12 column">
+			<div class="row clearfix">
+				<div class="col-md-8 column">
+
+                                                    <!-- shoroo tab -->
+
+                        <div class="container">
+                          <div class="row">
+                            <div class="col-sm-10 col-sm-offset-1" id="logout">
+                                <div class="page-header">
+                                    <h3 class="reviews">همه ی پروژه ها</h3>
+
+
+                                </div>
+                                <div class="project-tabs">                       <!-- comment-tabs edite-->
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        <li class="active"><a href="#comments-logout" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">پروژه های من</h4></a></li>
+                                        <li><a href="#add-comment" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">پروژه های عمومی</h4></a></li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="comments-logout">
+                                            <!-- start table proje khodesh-->
+                                            <div class="main">
+                                                 {% if user.is_authenticated %}
+                                                <table class="table table-striped custab">
+                                                <thead>
+                                                    <tr>
+                                                        <th>عنوان</th>
+                                                       <th >تاریخ ایجاد پروژه</th>
+                                                        <th>مدیر پروژه</th>
+                                                        <th class="text-center">درخواست</th>
+                                                    </tr>
+                                                </thead>
+                                                     {% for p in object_list%}
+                                                        {% ifequal user p.owner %}
+                                                        {% ifnotequal 100 p.progress %}
+                                                        <tr>
+                                                            <td>{{ p.ProjectName }}</td>
+                                                            <td>{{ p.startTime }}</td>
+                                                            <td><a href="{% url 'issues:profile' p.owner.pk %}">{{ p.owner}}</a></td>
+                                                            <td class="text-center"><a class='btn btn-info btn-xs' href="{% url 'issues:projectPage' p.pk %}"><span class="glyphicon glyphicon-edit"></span>مشاهده</a> <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span>حذف</a></td>
+                                                        </tr>
+                                                            {% endifnotequal %}
+                                                            {% endifequal %}
+                                                            {% endfor %}
+                                                </table>
+                                                {% endif %}
+                                            </div>
+                                            <!-- end table -->
+                                        </div>
+
+
+
+                                        <div class="tab-pane" id="add-comment">
+                                <!-- start table 2 public -->
+                                             <div class="main">
+                                                 {% if user.is_authenticated %}
+                                                <table class="table table-striped custab">
+                                                <thead>
+                                                    <tr>
+                                                        <th>عنوان</th>
+                                                        <th >تاریخ ایجاد پروژه</th>
+                                                        <th>مدیر پروژه</th>
+                                                        <th class="text-center">درخواست</th>
+                                                    </tr>
+                                                </thead>
+                                                    {% for p in object_list%}
+                                                     {% if p.projectAccessType%}
+                                                        <tr>
+                                                            <td>{{ p.ProjectName }}</td>
+                                                            <td>{{ p.startTime }}</td>
+                                                            <td><a href="{% url 'issues:profile' p.owner.pk %}">{{ p.owner}}</a></td>
+                                                            <td class="text-center"><a class='btn btn-info btn-xs' href="{% url 'issues:projectPage' p.pk %}"><span class="glyphicon glyphicon-edit"></span> مشاهده</a> <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> حذف</a></td>
+                                                        </tr>
+                                                        {%endif%}
+                                                    {%endfor%}
+                                                </table>
+                                              {% endif %}
+                                               </div>
+                                            <!-- end table 2 -->
+                                        </div>
+
+
+                                </div>
+                            </div>
+                          </div>
+
+                        </div>
+
+                            <!-- end tab -->
+				</div>
+
+				<div class="col-md-4 column">
+
+				</div>
+			</div>
+		</div>
+	</div>
+       <! inja -->
+        <div class="row clearfix">
+            <div class="col-md-12 column"><!-- social-->
+                        <center>
+
+                            <br><br><br><br>
+                            <hr class="prettyline">
+                            <a href="http://www.facebook.com"><img id="socialicon" src="../static/img/facebook.png" width="145" height="113" alt="Facebook" ></a>
+                            <a href="http://www.twitter.com"><img id="socialicon" src="../static/img/Twitter-px.png" width="145" height="113" alt="Twitter"></a>
+                            <a href="http://www.github.com"><img id="socialicon" src="../static/img/github2.jpg" width="145" height="113" alt="Github"></a>
+                            <a href="http://www.linkedin.com"><img id="socialicon" src="../static/img/linkedin.png" width="145" height="113" alt="Linkedin"></a>
+                            <a href="http://www.youtube.com"><img id="socialicon" src="../static/img/youtube.png" width="145" height="113" alt="Youtube"></a>
+                            <a href="http://www.plus.google.com"><img id="socialicon" src="../static/img/googleplus-revised.png" width="145" height="113" alt="Google+"></a>
+                            <a href="http://www.gmail.com"><img id="socialicon" src="../static/img/gmail-icon.png" width="145" height="113" alt="Gmail"></a>
+                            <a href="http://www.yahoo.com"><img id="socialicon" src="../static/img/yahoo-icon.png" width="145" height="113" alt="Yahoo"></a>
+                        </center>
+            </div>
+        </div>
     </div>
-{% endblock %}
+   </div>
+</body>
+</html>
