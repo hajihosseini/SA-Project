@@ -137,6 +137,18 @@
   background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
 }
 
+
+.prettyline-blue {
+  height: 10px;
+  width:1000px ;
+  border-top: 0;
+  margin-right: 260px ;
+  margin-left: -230px;
+  background: #0f71ba;
+  border-radius: 5px;
+  background-image: -webkit-linear-gradient(left,#0f71ba);
+
+}
 /* end css for signin/up*/
 
 /* css for information*/
@@ -148,7 +160,7 @@
 
 #paragraph2{
 
-    font-size: 30px;
+    font-size:30px;
 }
 
 #Boldparagraph{
@@ -172,144 +184,158 @@
 
 /* end css for social */
 
-
-
-
 /* css for navbar */
 
-/* demo page styles */
-body {
-    background:#eee;
-    margin:0;
-    padding:0;
+@import url(http://fonts.googleapis.com/css?family=Capriola);
+#cssmenu,
+#cssmenu ul,
+#cssmenu ul li,
+#cssmenu ul li a {
+
+  padding: 0;
+  border: 0;
+  list-style: none;
+  line-height: 1;
+  display: block;
+  position: relative;
+  font-family: Capriola, Helvetica, sans-serif;
 }
-.example {
-    background:#fff url(../images/clouds-in-blue-sky.jpg);
-    width:770px;
-    height:570px;
-    border:1px #000 solid;
-    margin:20px auto;
-    padding:15px;
-    border-radius:3px;
-    -moz-border-radius:3px;
-    -webkit-border-radius:3px;
+#cssmenu {
+  margin-top:-25px;
+  margin-right: -120px;
+  width: 1690px;
+  height: 59px;
+  padding-bottom: 4px;
+}
+#cssmenu.align-right {
+  float: right;
+}
+#cssmenu.align-right ul li {
+  float: right;
+  margin-right: 0;
+  margin-left: 4px;
+}
+#cssmenu.align-right ul li:first-child,
+#cssmenu.align-right ul li:first-child > a {
+  border-bottom-right-radius: 3px;
+}
+#cssmenu #bg-one,
+#cssmenu #bg-two,
+#cssmenu #bg-three,
+#cssmenu #bg-four {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+#cssmenu #bg-one {
+  height: 10px;
+  background: #0f71ba;
+}
+#cssmenu #bg-two {
+  height: 59px;
+  z-index: 2;
+  background: url('images/bg.png');
+}
+#cssmenu #bg-three {
+  bottom: 4px;
+  height: 55px;
+  z-index: 3;
+  background: #222222;
+  background: -moz-linear-gradient(top, #555555 0%, #222222 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #555555), color-stop(100%, #222222));
+  background: -webkit-linear-gradient(top, #555555 0%, #222222 100%);
+  background: -o-linear-gradient(top, #555555 0%, #222222 100%);
+  background: -ms-linear-gradient(top, #555555 0%, #222222 100%);
+  background: linear-gradient(to bottom, #555555 0%, #222222 100%);
+}
+#cssmenu #bg-four {
+  bottom: 4px;
+  height: 55px;
+  z-index: 4;
+  background: url('images/bg.png');
+}
+#cssmenu ul {
+  height: 59px;
+}
+#cssmenu ul li {
+  float: right;
+  margin-right: 4px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  z-index: 5;
+}
+#cssmenu ul li a {
+  padding: 24px 30px 20px 30px;
+  margin-bottom: 4px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  color: #eeeeee;
+  font-size: 15px;
+  text-decoration: none;
+}
+#cssmenu ul li:first-child,
+#cssmenu ul li:first-child > a {
+  border-bottom-left-radius: 3px;
+}
+#cssmenu ul li:hover,
+#cssmenu ul li.active {
+  background: #0f71ba;
+  background: -moz-linear-gradient(top, #3fa4f0 0%, #0f71ba 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #3fa4f0), color-stop(100%, #0f71ba));
+  background: -webkit-linear-gradient(top, #3fa4f0 0%, #0f71ba 100%);
+  background: -o-linear-gradient(top, #3fa4f0 0%, #0f71ba 100%);
+  background: -ms-linear-gradient(top, #3fa4f0 0%, #0f71ba 100%);
+  background: linear-gradient(to bottom, #3fa4f0 0%, #0f71ba 100%);
+}
+#cssmenu ul li a:hover,
+#cssmenu ul li.active > a {
+  background: url('/img/bg.png');
+  color: #ffffff;
 }
 
 
-/* main menu styles */
-#nav {
-    display:inline-block;
-    width:100%;
-    margin:0px auto;
-    padding:0;
-    background:#32CD32 url(../images/bg.png) repeat-x 0 -110px;
+/* end css of navbar */
 
-    border-radius:30px; /*some css3*/
-    -moz-border-radius:10px;
-    -webkit-border-radius:10px;
-    box-shadow:0 2px 2px rgba(0,0,0, .5);
-    -moz-box-shadow:0 2px 2px rgba(0,0,0, .5);
-    -webkit-box-shadow:0 2px 2px rgba(0,0,0, .5);
-}
-#nav li {
-    margin:15px;
-    float:right;
-    position:relative;
-    list-style:none;
-}
-#nav a {
-    font-weight:bold;
-    font-size: 300%;
-    color:#e7e5e5;
-    text-decoration:none;
-    display:block;
-    padding:20px 20px;
 
-    border-radius:10px; /*some css3*/
-    -moz-border-radius:10px;
-    -webkit-border-radius:10px;
-    text-shadow:0 2px 2px rgba(0,0,0, .7);
+/* css of table-bse */
+ .user-row {
+    margin-bottom: 14px;
 }
 
-/* selected menu element */
-#nav .current a, #nav li:hover > a {
-    background:#7788aa url(../images/bg.png) repeat-x 0 -20px;
-    color:#000;
-    border-top:1px solid #f8f8f8;
-
-    box-shadow:0 2px 2px rgba(0,0,0, .7); /*some css3*/
-    -moz-box-shadow:0 2px 2px rgba(0,0,0, .7);
-    -webkit-box-shadow:0 2px 2px rgba(0,0,0, .7);
-    text-shadow:0 2px 2px rgba(255,255,255, 0.7);
+.user-row:last-child {
+    margin-bottom: 0;
 }
 
-/* sublevels */
-#nav ul li:hover a, #nav li:hover li a {
-    background:none;
-    border:none;
-    color:#000;
-}
-#nav ul li a:hover {
-    background:#F3FF00 url(../images/bg.png) repeat-x 0 -100px;
-    color:#fff;
-
-    border-radius:10px; /*some css3*/
-    -moz-border-radius:10px;
-    -webkit-border-radius:10px;
-    text-shadow:0 2px 2px rgba(0,0,0, 0.7);
+.dropdown-user {
+    margin: 13px 0;
+    padding: 5px;
+    height: 100%;
 }
 
-#nav ul li:first-child > a {
-    -moz-border-radius-topleft:10px; /*some css3*/
-    -moz-border-radius-topright:10px;
-    -webkit-border-top-left-radius:10px;
-    -webkit-border-top-right-radius:10px;
-}
-#nav ul li:last-child > a {
-    -moz-border-radius-bottomleft:10px; /*some css3*/
-    -moz-border-radius-bottomright:10px;
-    -webkit-border-bottom-left-radius:10px;
-    -webkit-border-bottom-right-radius:10px;
+.dropdown-user:hover {
+    cursor: pointer;
 }
 
-/* drop down */
-#nav li:hover > ul {
-    opacity:1;
-    visibility :visible;
-}
-#nav ul {
-    opacity:0;
-    visibility:hidden;
-    padding:0;
-    width:175px;
-    position:absolute;
-    background:#7CFF00 url(../images/bg.png) repeat-x 0 0;
-    border:1px solid #7788aa;
-
-    border-radius:10px; /*some css3*/
-    -moz-border-radius:10px;
-    -webkit-border-radius:10px;
-    box-shadow:0 2px 2px rgba(0,0,0, .5);
-    -moz-box-shadow:0 2px 2px rgba(0,0,0, .5);
-    -webkit-box-shadow:0 2px 2px rgba(0,0,0, .5);
-
-    -moz-transition:opacity .25s linear, visibility .1s linear .1s;
-    -webkit-transition:opacity .25s linear, visibility .1s linear .1s;
-    -o-transition:opacity .25s linear, visibility .1s linear .1s;
-    transition:opacity .25s linear, visibility .1s linear .1s;
-}
-#nav ul li {
-    float:none;
-    margin:0;
-}
-#nav ul a {
-    font-weight:normal;
-    text-shadow:0 2px 2px rgba(255,255,255, 0.7);
-}
-#nav ul ul {
-    left:160px;
-    top:0px;
+.table-user-information > tbody > tr {
+    border-top: 1px solid rgb(221, 221, 221);
 }
 
-/* end of navbar */
+.table-user-information > tbody > tr:first-child {
+    border-top: 0;
+}
 
+
+.table-user-information > tbody > tr > td {
+    border-top: 0;
+    margin-left: 10px;
+
+    font-size: 30px;
+    float: right;
+}
+.toppad
+{margin-top:20px;
+}
+
+/* end css of css table-base*/
