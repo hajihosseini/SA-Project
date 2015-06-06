@@ -48,10 +48,13 @@ class Task(models.Model):
     taskDescription = models.TextField(max_length=2000)
     skills = models.ManyToManyField(Skill, "taskSkills")
     project = models.ForeignKey(Project, related_name="task")
-    operator = models.ManyToManyField(User, related_name="operator")
+    operator = models.ManyToManyField(User, related_name="operator",null=True)
     done = models.BooleanField(default=False)
     deadline = models.DateTimeField()
     completed = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ["-deadline"]
 
     def __str__(self):
         return self.taskTitle
@@ -67,15 +70,18 @@ class Task(models.Model):
 class UserProfile(models.Model):
     avatar = models.URLField(null=True)
     state = models.BooleanField(default=True)
-    location= models.CharField(null=True,max_length=100)
-    position= models.CharField(null=True,max_length=100)
+    location = models.CharField(null=True,max_length=100)
+    position = models.CharField(null=True,max_length=100)
     grade = models.IntegerField(default=0)
     user = models.OneToOneField(User, related_name="profile")
-    #skills = models.ManyToManyField(Skill,related_name="userSkills",null=True)
+    skills = models.ManyToManyField(Skill,related_name="userSkills",null=True)
     @models.permalink
+
     def get_absolute_url(self):
         return ('issues:profile', None,{'pk':self.user.pk})
 
+    class Meta:
+        ordering = ["-grade"]
     def __str__(self):
         return self.user.username
 
