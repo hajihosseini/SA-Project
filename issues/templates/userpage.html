@@ -28,6 +28,12 @@
             color:#003366;
             height: 40px;
         }
+        #font-l{
+            float:right;
+            font-size: 30px;
+            color: #000000;
+        }
+
     </style>
 </head>
 <body>
@@ -172,6 +178,32 @@
                                                         <br><br><br><br>
                                                         <hr class="prettyline-blue">
                                                         <h1 id="font-h">پروژه های شخصی</h1>
+                                                             <div class="main">
+                                                                  {% if user.is_authenticated %}
+                                                                    <table class="table table-striped custab">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>عنوان</th>
+                                                                           <th >تاریخ ایجاد پروژه</th>
+                                                                            <th>مدیر پروژه</th>
+                                                                            <th class="text-center">درخواست</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                         {% for p in object_list%}
+                                                                            {% ifequal user p.owner %}
+                                                                            {% ifnotequal 100 p.progress %}
+                                                                            <tr>
+                                                                                <td>{{ p.ProjectName }}</td>
+                                                                                <td>{{ p.startTime }}</td>
+                                                                                <td><a href="{% url 'issues:profile' p.owner.pk %}">{{ p.owner}}</a></td>
+                                                                                <td class="text-center"><a class='btn btn-info btn-xs' href="{% url 'issues:projectPage' p.pk %}"><span class="glyphicon glyphicon-edit"></span>مشاهده</a> </td>
+                                                                            </tr>
+                                                                                {% endifnotequal %}
+                                                                                {% endifequal %}
+                                                                                {% endfor %}
+                                                                    </table>
+                                                                {%endif%}
+                                                               </div>
                                                         <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
                                                     </div>
                                                   </div>
