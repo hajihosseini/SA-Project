@@ -144,7 +144,7 @@ class NewProject(generic.CreateView):
 
 class NewTask(generic.CreateView):
     model = Task
-    fields = ['taskTitle', 'taskDescription','operator' 'skills', 'deadline']
+    fields = ['taskTitle', 'taskDescription','skills', 'deadline']
     def form_valid(self, form):
         form.instance.project = Project.objects.get(pk=self.kwargs['pk'])
         return super(NewTask, self).form_valid(form)
