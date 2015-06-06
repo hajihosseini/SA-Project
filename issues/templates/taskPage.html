@@ -10,24 +10,27 @@
 <p>operators: <ul>{% for operator in task.operator.all %}<li><a href="{% url 'issues:profile' operator.pk %}">{{ operator }}</a></li>{% endfor %}</p></ul>
 <p>skills : <ul>{% for skill in task.skills.all %}<li>{{skill}} </li>{% endfor %}</ul></p>
 {%if task.done%}
-<p>this task is done</p>
-<a href="{% url 'issues:taskDone' task.pk %}" target="_self" >Undone the task</a>
-<br>
-{%else%}
-<p>this task is not done</p>
-<a href="{% url 'issues:taskDone' task.pk %}" target="_self" >Done the task</a>
-<br>
+    <p>this task is done</p>
+    {%if not task.completed%}
+        <a href="{% url 'issues:taskDone' task.pk %}" target="_self" >Undone the task</a>
+    {%endif%}
 {%endif%}
-    <p><a class="button" href="{% url 'issues:newComment' task.pk %}">+ Add New Comment</a></p>
-
-<form method="POST">
-    grade: <input type="number" name="grade" min="1" max="10"><br/>
-    <input href="{% url 'issues:upgrade' task.pk %} "type="submit" value="Submit" />
-</form><br/><br/>
+{%if not task.done%}
+    <p>this task is not done</p>
+    {%if not task.completed%}<a href="{% url 'issues:taskDone' task.pk %}" target="_self" >Done the task</a>{%endif%}
+    <br>
+{%endif%}
+{%if not task.completed%}
+<form action="{% url 'issues:upgrade' task.pk %}" method="post">
+{% csrf_token %}
+    <input type="number" name="grade" value="{{grade}}" min="0" max ="10"/>
+    <input type="submit" value="upgrade" />
+</form>
+{%endif%}
+<p><a class="button" href="{% url 'issues:newComment' task.pk %}">+ Add New Comment</a></p>
 {% for comment in page_obj %}
     <ul>
-
-      <li>{{comment.creator}}|{{comment.date}}<br>{{comment.body}}</li>
+      <li><a href="{% url 'issues:profile' comment.creator.pk %}">{{comment.creator}}</a>|{{comment.date}}<br>{{comment.body}}</li>
     </ul>
 {%endfor%}
 <a href="{% url 'issues:projectPage' task.project.pk %}"> &lt;&lt;Back to Project Page</a>
