@@ -52,10 +52,10 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.messages',
     'django.contrib.staticfiles',
     'issues',
     'django.contrib.sites',
+    'django.contrib.messages',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -124,11 +124,9 @@ SITE_ID = 1
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
-
+LOGIN_REDIRECT_URL = "/issues/"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_HOST_USER = "pyissues.noreply@gmail.com"
-EMAIL_HOST_PASSWORD = ""
+EMAIL_HOST_PASSWORD = "pyissues123"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-
-LOGIN_REDIRECT_URL = "/issues/"
