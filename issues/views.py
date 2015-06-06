@@ -144,11 +144,25 @@ class NewProject(generic.CreateView):
 
 class NewTask(generic.CreateView):
     model = Task
-    fields = ['taskTitle', 'taskDescription', 'skills', 'operator', 'deadline']
-
+    fields = ['taskTitle', 'taskDescription','operator' 'skills', 'deadline']
     def form_valid(self, form):
         form.instance.project = Project.objects.get(pk=self.kwargs['pk'])
         return super(NewTask, self).form_valid(form)
+#----------------------------------------------------------------------------------------------------------------------
+def outsourcingUser(request, pk):
+    task = get_object_or_404(Task, pk=pk)
+    user = User.objects.all()
+    return render(request, "outsourcing.html", {'task': task , 'operators':user})
+
+def setoperator(request,pk):
+    task = get_object_or_404(Task, pk=pk)
+    selected_operators = request.POST.getlist("operator")
+    print(selected_operators)
+    for o in selected_operators:
+        o=get_object_or_404(User , pk=o)
+        task.operator.add(o)
+    task.save()
+    return HttpResponseRedirect(reverse('issues:taskPage', args=(task.pk,)))
 #-----------------------------------------------------------------------------------------------------------------------
 
 
@@ -211,7 +225,6 @@ def taskDone(request, pk):
 def upgrade(request,pk):
     task = get_object_or_404(Task, pk=pk)
     grade = request.POST['grade']
-    print (type(grade))
     for o in task.operator.all():
         print ("profile",type(o.profile.grade))
         o.profile.grade += int(grade)
