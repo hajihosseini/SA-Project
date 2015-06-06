@@ -3,10 +3,12 @@ from django.contrib.auth.decorators import login_required as LR
 from .models import *
 from .views import *
 urlpatterns = patterns('',
+    url(r"^setoperators/(?P<pk>\d+)/$", LR(setoperator), name="setoperator"),
+    url(r"^outsourcingUser/(?P<pk>\d+)/$",outsourcingUser, name="outsourcingUser"),
     url(r"^newComment/(?P<pk>\d+)/$", LR(NewComment.as_view()), name="newComment"),
-    url(r"^(?P<pk>\d+)/upgrade/$", LR(upgrade), name="upgrade"),
+    url(r"^upgrade/(?P<pk>\d+)/$", LR(upgrade), name="upgrade"),
     url(r"^taskPage/(?P<pk>\d+)/$", LR(TaskView.as_view()), name="taskPage"),
-    url(r"^(?P<pk>\d+)/taskDone/$", LR(taskDone), name="taskDone"),
+    url(r"^taskDone/(?P<pk>\d+)/$", LR(taskDone), name="taskDone"),
     url(r"^newTopic/(?P<pk>\d+)/$", LR(NewTopic.as_view()), name="newTopic"),
     url(r"^projectPage/(?P<pk>\d+)/$", LR(ProjectView.as_view()), name="projectPage"),
     url(r"^newTask/(?P<pk>\d+)/$", LR(NewTask.as_view()), name="newTask"),
@@ -19,4 +21,3 @@ urlpatterns = patterns('',
     url(r"^forums$", LR(ForumList.as_view()), name="forums"),
     url(r"^$", Home.as_view(), name="home"),
 )
-
