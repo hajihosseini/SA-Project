@@ -27,7 +27,7 @@ class Project(models.Model):
         ordering = ["-startTime"]
 
     def __str__(self):
-        return self.name
+        return self.ProjectName
 
     def get_absolute_url(self):
         """ it gets the absolute url of current topic page, this method has been used in views"""
@@ -51,6 +51,7 @@ class Task(models.Model):
     operator = models.ManyToManyField(User, related_name="operator")
     done = models.BooleanField(default=False)
     deadline = models.DateTimeField()
+    completed = models.BooleanField(default=False)
 
     def __str__(self):
         return self.taskTitle
@@ -172,12 +173,3 @@ class Comment(models.Model):
     def get_absolute_url(self) :
         """ it gets the absolute url of current topic page, this method has been used in views"""
         return reverse('issues:taskPage',args=[self.task.pk])
-
-    #def save(self, *args, **kwargs):
-        #if self.creator!=self.task.user:
-            #"""email when a wallpost is added."""
-            #message = "new comment  on task %s  by '%s'" % ( self.task ,self.creator)
-            #from_addr = "pycommunity.noreply@gmail.com"
-            #recipient_list = [o.email for o in self.task.operator]
-            #send_mail("New Wallpost Added", message, from_addr, recipient_list)
-        #super(Comment, self).save(*args, **kwargs)
