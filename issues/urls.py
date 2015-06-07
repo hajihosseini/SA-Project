@@ -18,6 +18,7 @@ urlpatterns = patterns('',
     url(r"^forum/(?P<pk>\d+)/$", LR(ForumView.as_view()), name="forum"),
     url(r"^topic/(?P<pk>\d+)/$", LR(TopicView.as_view()), name="topic"),
     url(r"^newPost/(?P<pk>\d+)/$", LR(NewPost.as_view()), name="newPost"),
+    url(r"^delTask/(?P<pk>\d+)/$", LR(delTask), name="delTask"),
     url(r"^forums$", LR(ForumList.as_view()), name="forums"),
     url(r"^$", Home.as_view(), name="home"),
 )
