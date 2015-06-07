@@ -43,8 +43,6 @@ class UserPageView(generic.detail.SingleObjectMixin, generic.ListView):
 #----------------------------------------------------------------------------------------------------------------------
 
 def editProfile(request, pk):
-    """ when a user press the like buttons the number of post creator's score will be increased
-        and an email will be sent to postcreator"""
     user=request.user
 
     if user.profile.state:
@@ -202,8 +200,6 @@ class TaskView(generic.detail.SingleObjectMixin, generic.ListView):
         return self.object.comment.all()
 #----------------------------------------------------------------------------------------------------------------------
 def taskDone(request, pk):
-    """ when a user press the like buttons the number of post creator's score will be increased
-        and an email will be sent to postcreator"""
     task = get_object_or_404(Task, pk=pk)
     project = task.project
     user = request.user
