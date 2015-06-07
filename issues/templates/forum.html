@@ -33,6 +33,11 @@
         font-size: 30px;
         float: right;
     }
+    #font-titr{
+            float:right;
+            font-size: 40px;
+            color: #0077CC;
+        }
     </style>
 </head>
 <body>
@@ -100,7 +105,8 @@
                                                   <h3 class="panel-title"></h3>
                                                 </div>
                                                 <div class="panel-body">
-                                                    <div class="عنوان">{{forum.title}}:</div>
+                                                    <div class="عنوان" id="font-titr">{{forum.title}}</div>
+                                                    <br>
                                                     <table class="table table-striped custab">
                                                 <thead>
                                                     <tr>
@@ -124,7 +130,7 @@
                                                             <th> </th>
                                                             <th class="text-center" id="font-h">{{topic.date}}</th>
                                                             <th> </th>
-                                                            <th><a href="{% url 'issues:profile' topic.creator.pk %}">{{ topic.creator}}</a></th>
+                                                            <th id="font-h"><a href="{% url 'issues:profile' topic.creator.pk %}">{{ topic.creator}}</a></th>
                                                             <th> </th>
                                                             <td class="text-center" id="font-h">{{ topic.title }}</td>
                                                             <th> </th>
@@ -139,7 +145,7 @@
 
                                                         <br><br><br>
                                                     </div>
-                                                      <p></p><a class="btn btn-primary" href="{% url 'issues:newTopic' forum.pk %}">+اضافه کردن سوال جدید</a></p>
+                                                      <center><p></p><a class="btn btn-primary" href="{% url 'issues:newTopic' forum.pk %}" id="font-h">+اضافه کردن سوال جدید</a></p></center>
                                                   <br><br><br><br><br><br><br>
                                                                 <div class="pagination">
                                                                     <span class="step-links">
