@@ -142,6 +142,8 @@ class NewTask(generic.CreateView):
         for o in task.operator.all():
             recipient_list.append(o.email)
             print (o.email)
+        if(user.email in recipient_list):
+            recipient_list.remove(user.email)
         from_addr="pyissues.noreply@gmail.com"
         send_mail("Map Notification", message, from_addr, recipient_list)
         return super(NewTask, self).form_valid(form)
@@ -270,6 +272,8 @@ class NewComment (generic.CreateView):
         for o in task.operator.all():
             recipient_list.append(o.email)
             print (o.email)
+        if(user.email in recipient_list):
+            recipient_list.remove(user.email)
         from_addr="pyissues.noreply@gmail.com"
         send_mail("Comment Notification", message, from_addr, recipient_list)
 
