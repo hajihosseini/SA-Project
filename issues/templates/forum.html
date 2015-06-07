@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html>
+{% load staticfiles %}
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
     <meta charset='utf-8'>
      <meta http-equiv="X-UA-Compatible" content="IE=edge">
      <meta name="viewport" content="width=device-width, initial-scale=1">
-     <link rel="stylesheet" href="../static/css/extra.css">
-    <link rel="stylesheet" href="../static/css/ext.css">
-     <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap-theme.css">
-    <link href="../static/css/generic.css" rel="stylesheet" type="text/css" />
-    <link href="../static/css/font-awesome.min.css" rel="stylesheet">
+     <link rel="stylesheet" href="{% static 'css/extra.css' %}">
+	 <link rel="stylesheet" href="{% static 'css//ext.css'%}">
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-theme.css'%}">
+    <link href="{% static 'css/generic.css'%}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css/css/font-awesome.min.css'%}" rel="stylesheet">
 
-    <script src="../static/js/jquery.js"></script>
-    <script src="../static/js/bootstrap.min.js"></script>
-    <script src="../static/js/npm.js"></script>
-    <script src="../static/js/extra.js"></script>
-    <script src="../static/js/ext.js"></script>
-     <script src="../static/js/jquery-latest.min.js" type="text/javascript"></script>
+    <script src="{% static 'js/jquery.js'%}"></script>
+    <script src="{% static 'js/bootstrap.min.js'%}"></script>
+    <script src="{% static 'js/npm.js'%}"></script>
+    <script src="{% static 'js/extra.js'%}"></script>
+	<script src="{% static 'js/ext.js'%}"></script>
+     <script src="{% static 'js/jquery-latest.min.js'%}" type="text/javascript"></script>
      <title>CSS MenuMaker</title>
     <style>
     html{
@@ -45,7 +46,7 @@
                     <div class="col-md-12 column">
 
 
-                        <img src="../static/img/image-1.png" alt="Mountain View" >
+                        <img src="{% static 'img/image-1.png' %}" alt="Mountain View" >
 
 
                     </div>
@@ -119,7 +120,7 @@
                                                         {% for topic in page_obj %}
                                                         <tr>
                                                             <td></td>
-                                                            <td class="text-center" id="font-h"><a class='btn btn-info btn-xs' href="{% url 'issues:projectPage' p.pk %}"><span class="glyphicon glyphicon-edit"></span><h4 id="font-h">مشاهده</h4></a> </td>
+                                                            <td class="text-center" id="font-h"><a class='btn btn-info btn-xs' href="{% url 'issues:topic' topic.pk %}"><span class="glyphicon glyphicon-edit"></span><h4 id="font-h">مشاهده</h4></a> </td>
                                                             <th> </th>
                                                             <th class="text-center" id="font-h">{{topic.date}}</th>
                                                             <th> </th>
