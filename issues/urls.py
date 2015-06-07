@@ -1,6 +1,7 @@
 from django.conf.urls import *
 from django.contrib.auth.decorators import login_required as LR
 from .models import *
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from .views import *
 urlpatterns = patterns('',
     url(r"^setoperators/(?P<pk>\d+)/$", LR(setoperator), name="setoperator"),
@@ -22,3 +23,4 @@ urlpatterns = patterns('',
     url(r"^forums$", LR(ForumList.as_view()), name="forums"),
     url(r"^$", Home.as_view(), name="home"),
 )
+urlpatterns += staticfiles_urlpatterns()
