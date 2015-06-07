@@ -244,3 +244,10 @@ class NewComment (generic.CreateView):
         form.instance.task = Task.objects.get(pk=self.kwargs['pk'])
         form.instance.date = timezone.now()
         return super(NewComment, self).form_valid(form)
+#----------------------------------------------------------------------------------------------------------------------
+
+def delTask(request,pk):
+    task = Task.objects.get(pk=pk)
+    project_pk = task.project.pk
+    task.delete()
+    return HttpResponseRedirect(reverse('issues:projectPage', args=(project_pk,)))
