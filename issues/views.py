@@ -251,3 +251,13 @@ def delTask(request,pk):
     project_pk = task.project.pk
     task.delete()
     return HttpResponseRedirect(reverse('issues:projectPage', args=(project_pk,)))
+#----------------------------------------------------------------------------------------------------------------------
+
+class EditTask(generic.UpdateView):
+    model = Task
+    fields = ['taskTitle',
+    'taskDescription',
+    'skills',
+    'operator',
+    'deadline']
+    template_name_suffix = '_update_form'
