@@ -168,6 +168,7 @@
                                                                                 <td>{{ task.taskDescription}}</td>
  										{%ifequal project.owner.pk user.pk %}
                 									<td><a class="button" href="{% url 'issues:delTask' task.pk %}">DELETE</a></td>
+            										<td><a class="button" href="{% url 'issues:editTask' task.pk %}">EDIT</a></td>
             									{%endifequal%}
                                                                             </tr>
 
