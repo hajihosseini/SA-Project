@@ -23,22 +23,12 @@ class Home(generic.ListView):
     template_name = "home.html"
 #----------------------------------------------------------------------------------------------------------------------
 
-
-class UserPageView(generic.detail.SingleObjectMixin, generic.ListView):
-    paginate_by = 20
-    template_name = "userpage.html"
-
-    def get(self, request, *args, **kwargs):
-        self.object = self.get_object(queryset=UserProfile.objects.all())
-        return super(UserPageView, self).get(request, *args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        context = super(UserPageView, self).get_context_data(**kwargs)
-        context['operator'] = self.object
-        return context
-
-    def get_queryset(self):
-        return self.object.user.owner.all()
+def userPageView(request, pk):
+    userp = get_object_or_404(User, pk=pk)
+    userprofile = userp.profile
+    task = Task.objects.filter(operator=userp)
+    project = Project.objects.filter (owner = userp)
+    return render(request, "userPage.html", {'userp': userp,'userprofile':userprofile,'task': task ,'project':project})
 
 #----------------------------------------------------------------------------------------------------------------------
 
@@ -200,6 +190,7 @@ class TaskView(generic.detail.SingleObjectMixin, generic.ListView):
         return self.object.comment.all()
 #----------------------------------------------------------------------------------------------------------------------
 def taskDone(request, pk):
+    
     task = get_object_or_404(Task, pk=pk)
     project = task.project
     user = request.user
@@ -226,20 +217,9 @@ def upgrade(request,pk):
         o.profile.grade += int(grade)
         o.profile.save()
     task.completed=True
+    task.grade = int(grade)
     task.save()
     return HttpResponseRedirect(reverse('issues:projectPage', args=(task.project.id,)))
-#----------------------------------------------------------------------------------------------------------------------
-
-
-class NewComment (generic.CreateView):
-    model = Comment
-    fields = ["body"]
-
-    def form_valid(self, form):
-        form.instance.creator = self.request.user
-        form.instance.task = Task.objects.get(pk=self.kwargs['pk'])
-        form.instance.date = timezone.now()
-        return super(NewComment, self).form_valid(form)
 #----------------------------------------------------------------------------------------------------------------------
 
 def delTask(request,pk):
@@ -257,3 +237,16 @@ class EditTask(generic.UpdateView):
     'operator',
     'deadline']
     template_name_suffix = '_update_form'
+#----------------------------------------------------------------------------------------------------------------------
+
+
+class NewComment (generic.CreateView):
+    model = Comment
+    fields = ["body"]
+
+    def form_valid(self, form):
+        form.instance.creator = self.request.user
+        form.instance.task = Task.objects.get(pk=self.kwargs['pk'])
+        form.instance.date = timezone.now()
+        return super(NewComment, self).form_valid(form)
+#-----------------------------------------------------------------------------------------------------------------------
