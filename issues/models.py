@@ -51,6 +51,7 @@ class Task(models.Model):
     operator = models.ManyToManyField(User, related_name="operator",null=True)
     done = models.BooleanField(default=False)
     deadline = models.DateTimeField()
+    grade = models.IntegerField(default=0)
     completed = models.BooleanField(default=False)
 
     class Meta:
