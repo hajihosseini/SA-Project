@@ -234,7 +234,6 @@ class EditTask(generic.UpdateView):
     fields = ['taskTitle',
     'taskDescription',
     'skills',
-    'operator',
     'deadline']
     template_name_suffix = '_update_form'
 #----------------------------------------------------------------------------------------------------------------------
