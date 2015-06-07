@@ -1,13 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
  <style type="text/css">
+                    #submit { background: #999; color: white; padding: 4px; text-decoration: none; ;}
                     .button { background: #999; color: white; padding: 4px; text-decoration: none; }
-                    #submit { float:inherit;}
-                </style>
+ </style>
 <h1>Task : {{ task.taskTitle }}</h1>
 <p>Task Description : {{ task.taskDescription }}</p>
 <p>Task Deadline : {{ task.deadline}}</p>
-<p>operators: <ul>{% for operator in task.operator.all %}<li><a href="{% url 'issues:profile' operator.pk %}">{{ operator }}</a></li>{% endfor %}</p></ul>
+<p>operators:
+{%if not task.completed%}<p><a class="button" href="{% url 'issues:outsourcingUser' task.pk %}">+ Add New Operators</a></p>{%endif%}
+<!-- ye dokme moshabehe bala baraye pishnahad dadan badan bayad ezafe shavad-->
 <p>skills : <ul>{% for skill in task.skills.all %}<li>{{skill}} </li>{% endfor %}</ul></p>
 {%if task.done%}
     <p>this task is done</p>
@@ -21,11 +23,11 @@
     <br>
 {%endif%}
 {%if not task.completed%}
-<form action="{% url 'issues:upgrade' task.pk %}" method="post">
-{% csrf_token %}
-    <input type="number" name="grade" value="{{grade}}" min="0" max ="10"/>
-    <input type="submit" value="upgrade" />
-</form>
+{%if task.done%}<form action="{% url 'issues:upgrade' task.pk %}" method="post">
+    {% csrf_token %}
+        <input type="number" name="grade" value="{{grade}}" min="0" max ="10"/>
+        <input type="submit" value="upgrade" />
+    </form>{%endif%}
 {%endif%}
 <p><a class="button" href="{% url 'issues:newComment' task.pk %}">+ Add New Comment</a></p>
 {% for comment in page_obj %}
