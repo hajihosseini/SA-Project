@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+    <form action="{% url 'issues:setoperator' task.pk %}" method="post">
+    {% csrf_token %}
+    {% for u in operators %}
+        <input type="checkbox" name="operator" value="{{u.id}}" />
+        <label for="operator{{ forloop.counter }}"><a href="{% url 'issues:profile' u.pk %}">{{ u.first_name}} {{ u.last_name}}</a>
+            <br>{%if u.profile.state%}Available{%else%}Busy{%endif%}-{{u.profile.location}}
+            <br>{% for skill in u.profile.skills.all %}*{{skill}}{% endfor %}
+     </label><br />
+    {% endfor %}
+    <input type="submit" value="add" />
+{% endblock %}
