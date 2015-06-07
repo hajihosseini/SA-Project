@@ -132,9 +132,18 @@ class NewProject(generic.CreateView):
 
 class NewTask(generic.CreateView):
     model = Task
-    fields = ['taskTitle', 'taskDescription','skills', 'deadline']
+    fields = ['taskTitle', 'taskDescription','operator', 'skills', 'deadline']
     def form_valid(self, form):
         form.instance.project = Project.objects.get(pk=self.kwargs['pk'])
+        user=self.request.user
+        task=Task.objects.get(pk=self.kwargs['pk'])
+        message= "%s (%s) map you to task :%s(%s)"% (user,'http://localhost:8000/issues/profile/%d/'%(user.id), task,'http://localhost:8000/issues/taskPage/%d/'%(task.id))
+        recipient_list = []
+        for o in task.operator.all():
+            recipient_list.append(o.email)
+            print (o.email)
+        from_addr="pyissues.noreply@gmail.com"
+        send_mail("Map Notification", message, from_addr, recipient_list)
         return super(NewTask, self).form_valid(form)
 #----------------------------------------------------------------------------------------------------------------------
 def outsourcingUser(request, pk):
@@ -143,13 +152,19 @@ def outsourcingUser(request, pk):
     return render(request, "outsourcing.html", {'task': task , 'operators':user})
 
 def setoperator(request,pk):
+    owner = request.user
     task = get_object_or_404(Task, pk=pk)
     selected_operators = request.POST.getlist("operator")
+    recipient_list = []
     print(selected_operators)
     for o in selected_operators:
         o=get_object_or_404(User , pk=o)
+        recipient_list.append(o.email)
         task.operator.add(o)
     task.save()
+    message= "%s (%s) added you to project :%s(%s)"% (owner,'http://localhost:8000/issues/profile/%d/'%(owner.id), task.project,'http://localhost:8000/issues/projectPage/%d/'%(task.project.id))
+    from_addr="pyissues.noreply@gmail.com"
+    send_mail("Add Notification", message, from_addr, recipient_list)
     return HttpResponseRedirect(reverse('issues:taskPage', args=(task.pk,)))
 #-----------------------------------------------------------------------------------------------------------------------
 
@@ -247,5 +262,16 @@ class NewComment (generic.CreateView):
         form.instance.creator = self.request.user
         form.instance.task = Task.objects.get(pk=self.kwargs['pk'])
         form.instance.date = timezone.now()
+
+        user=self.request.user
+        task=Task.objects.get(pk=self.kwargs['pk'])
+        message= "%s (%s) commented on your task :%s(%s)"% (user,'http://localhost:8000/issues/profile/%d/'%(user.id), task,'http://localhost:8000/issues/taskPage/%d/'%(task.id))
+        recipient_list = []
+        for o in task.operator.all():
+            recipient_list.append(o.email)
+            print (o.email)
+        from_addr="pyissues.noreply@gmail.com"
+        send_mail("Comment Notification", message, from_addr, recipient_list)
+
         return super(NewComment, self).form_valid(form)
 #-----------------------------------------------------------------------------------------------------------------------
