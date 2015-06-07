@@ -229,13 +229,19 @@ def taskDone(request, pk):
 def upgrade(request,pk):
     task = get_object_or_404(Task, pk=pk)
     grade = request.POST['grade']
+
+    user=request.user
+    recipient_list = []
+    message= "%s (%s) rated you for task :%s(%s)"% (user,'http://localhost:8000/issues/profile/%d/'%(user.id), task,'http://localhost:8000/issues/taskPage/%d/'%(task.id))
     for o in task.operator.all():
+        recipient_list.append(o.email)
         print ("profile",type(o.profile.grade))
         o.profile.grade += int(grade)
         o.profile.save()
     task.completed=True
-    task.grade = int(grade)
     task.save()
+    from_addr="pyissues.noreply@gmail.com"
+    send_mail("Rate Notification", message, from_addr, recipient_list)
     return HttpResponseRedirect(reverse('issues:projectPage', args=(task.project.id,)))
 #----------------------------------------------------------------------------------------------------------------------
 
