@@ -33,6 +33,27 @@
         font-size: 30px;
         float: right;
     }
+    #font-h{
+            float:center;
+            font-size: 50px;
+            color: #0077CC;
+        }
+    #font-titr{
+            float:right;
+            font-size: 40px;
+            color: #0077CC;
+        }
+        #hr-color{
+            color:#003366;
+            height: 40px;
+        }
+        #font-l{
+            float:right;
+            margin-right: 110px;
+            margin-left: 100px;
+            font-size: 20px;
+            color: #000000;
+        }
     </style>
 
 </head>
@@ -66,14 +87,12 @@
                                    <li><a href="{% url 'issues:profile' user.pk %}"><span>صفحه شخصی</span></a></li>
                                    <li class='last'><a href="{% url 'issues:newProject' user.pk %}"><span>پروزه جدید</span></a></li>
                                     <li class='last'><a href="{% url 'issues:forums'%}"><span>پرسش و پاسخ</span></a></li>
-								{%endif%}
 
-                                {% if not user.is_authenticated %}
+                                <!--{% if not user.is_authenticated %}
                                 <li><a href="/accounts/login/?next=/issues/">ورود</a></li>
-                                    {% endif %}
+                                    {% endif %}-->
 
-                                    {% if user.is_authenticated %}
-                                        <li><a href="/accounts/logout/?next=/issues/">خروج</a></li>
+                                  <li><a href="/accounts/logout/?next=/issues/">خروج</a></li>
                                     {% endif %}
                                 </ul>
                                 </div>
@@ -101,129 +120,223 @@
                                                   <h3 class="panel-title"></h3>
                                                 </div>
                                                 <div class="panel-body">
+
+                                                  <!-- home page-->
+                                                  {% if user.is_authenticated %}
                                                     <!-- start tab and projects -->
                                                     <div class="container">
-                          <div class="row">
-                            <div class="col-sm-10 col-sm-offset-1" id="logout">
-                                <div class="page-header">
-                                    <h3 class="reviews">همه ی پروژه ها</h3>
+                                                      <div class="row">
+                                                        <div class="col-sm-10 col-sm-offset-1" id="logout">
+                                                            <div class="page-header">
+                                                                <h3 class="reviews" id="font-titr">همه ی پروژه ها</h3>
+
+                                                            </div>
+                                                            <div class="comment-tabs">                       <!-- comment-tabs edite-->
+                                                                <ul class="nav nav-tabs" role="tablist">
+                                                                    <li class="active"><a href="#comments-logout" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">پروژه های من</h4></a></li>
+                                                                    <li><a href="#add-comment" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">پروژه های عمومی</h4></a></li>
+                                                                </ul>
+                                                                <div class="tab-content">
+                                                                    <div class="tab-pane active" id="comments-logout">
+                                                                             <!-- start table proje khodesh-->
+
+                                                                            <table class="table table-striped custab">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th ></th>
+                                                                                    <th ></th>
+                                                                                    <th class="text-center" id="home-font">مدیر پروژه</th>
+                                                                                    <th ></th>
+                                                                                   <th class="text-center" id="home-font">تاریخ ایجاد پروژه</th>
+                                                                                    <th ></th>
+
+                                                                                    <th class="text-center" id="home-font">عنوان</th>
+                                                                                    <th ></th>
+
+                                                                                </tr>
+                                                                            </thead>
+                                                                                 {% for p in object_list%}
+                                                                                    {% ifequal user p.owner %}
+                                                                                    {% ifnotequal 100 p.progress %}
+                                                                                    <tr>
+                                                                                         <td class="text-center"><a class='btn btn-info btn-xs' href="{% url 'issues:projectPage' p.pk %}"><span class="glyphicon glyphicon-edit"></span><h2>مشاهده</h2></a><!-- <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span><h2  about="">حذف</h2></a>--></td>
+                                                                                         <th ></th>
+                                                                                        <td class="text-center" id="home-font"><a href="{% url 'issues:profile' p.owner.pk %}">{{ p.owner}}</a></td>
+                                                                                        <th ></th>
+                                                                                        <td class="text-center" id="home-font">{{ p.startTime }}</td>
+                                                                                        <th ></th>
+                                                                                        <td class="text-center" id="home-font">{{ p.ProjectName }}</td>
+                                                                                        <th ></th>
 
 
-                                </div>
-                                <div class="comment-tabs">                       <!-- comment-tabs edite-->
-                                    <ul class="nav nav-tabs" role="tablist">
-                                        <li class="active"><a href="#comments-logout" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">پروژه های من</h4></a></li>
-                                        <li><a href="#add-comment" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">پروژه های عمومی</h4></a></li>
-                                    </ul>
-                                    <div class="tab-content">
-                                        <div class="tab-pane active" id="comments-logout">
-
-                                            <!-- start table proje khodesh-->
-
-                                                 {% if user.is_authenticated %}
-                                                <table class="table table-striped custab">
-                                                <thead>
-                                                    <tr>
-                                                        <th ></th>
-                                                        <th ></th>
-                                                        <th class="text-center" id="home-font">مدیر پروژه</th>
-                                                        <th ></th>
-                                                       <th class="text-center" id="home-font">تاریخ ایجاد پروژه</th>
-                                                        <th ></th>
-
-                                                        <th class="text-center" id="home-font">عنوان</th>
-                                                        <th ></th>
-
-                                                    </tr>
-                                                </thead>
-                                                     {% for p in object_list%}
-                                                        {% ifequal user p.owner %}
-                                                        {% ifnotequal 100 p.progress %}
-                                                        <tr>
-                                                             <td class="text-center"><a class='btn btn-info btn-xs' href="{% url 'issues:projectPage' p.pk %}"><span class="glyphicon glyphicon-edit"></span>مشاهده</a> <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span>حذف</a></td>
-                                                             <th ></th>
-                                                            <td class="text-center" id="home-font"><a href="{% url 'issues:profile' p.owner.pk %}">{{ p.owner}}</a></td>
-                                                            <th ></th>
-                                                            <td class="text-center" id="home-font">{{ p.startTime }}</td>
-                                                            <th ></th>
-                                                            <td class="text-center" id="home-font">{{ p.ProjectName }}</td>
-                                                            <th ></th>
+                                                                                    </tr>
+                                                                                        {% endifnotequal %}
+                                                                                        {% endifequal %}
+                                                                                        {% endfor %}
+                                                                            </table>
 
 
-                                                        </tr>
-                                                            {% endifnotequal %}
-                                                            {% endifequal %}
-                                                            {% endfor %}
-                                                </table>
-                                            {%endif%}
-
-                                            <!-- end table -->
-                                        </div>
+                                                                        <!-- end table -->
+                                                                    </div>
 
 
 
-                                        <div class="tab-pane" id="add-comment">
-                                <!-- start table 2 public -->
-                                             <div class="main">
-                                                 {% if user.is_authenticated %}
-                                                <table class="table table-striped custab">
-                                                <thead>
-                                                     <tr>
-                                                        <th ></th>
-                                                        <th ></th>
-                                                        <th class="text-center" id="home-font">مدیر پروژه</th>
-                                                        <th ></th>
-                                                       <th class="text-center" id="home-font">تاریخ ایجاد پروژه</th>
-                                                        <th ></th>
+                                                                    <div class="tab-pane" id="add-comment">
+                                                            <!-- start table 2 public -->
+                                                                         <div class="main">
 
-                                                        <th class="text-center" id="home-font">عنوان</th>
-                                                        <th ></th>
+                                                                            <table class="table table-striped custab">
+                                                                            <thead>
+                                                                                 <tr>
+                                                                                    <th ></th>
+                                                                                    <th ></th>
+                                                                                    <th class="text-center" id="home-font">مدیر پروژه</th>
+                                                                                    <th ></th>
+                                                                                   <th class="text-center" id="home-font">تاریخ ایجاد پروژه</th>
+                                                                                    <th ></th>
 
-                                                    </tr>
-                                                </thead>
-                                                    {% for p in object_list%}
-                                                     {% if p.projectAccessType%}
-                                                         <tr>
-                                                             <td class="text-center"><a class='btn btn-info btn-xs' href="{% url 'issues:projectPage' p.pk %}"><span class="glyphicon glyphicon-edit"></span>مشاهده</a> <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span>حذف</a></td>
-                                                             <th ></th>
-                                                            <td class="text-center" id="home-font"><a href="{% url 'issues:profile' p.owner.pk %}">{{ p.owner}}</a></td>
-                                                            <th ></th>
-                                                            <td class="text-center" id="home-font">{{ p.startTime }}</td>
-                                                            <th ></th>
-                                                            <td class="text-center" id="home-font">{{ p.ProjectName }}</td>
-                                                            <th ></th>
+                                                                                    <th class="text-center" id="home-font">عنوان</th>
+                                                                                    <th ></th>
 
-
-                                                        </tr>
-                                                        {%endif%}
-                                                    {%endfor%}
-                                                </table>
-                                                 {% endif %}
-                                               </div>
-                                            <!-- end table 2 -->
-                                        </div>
+                                                                                </tr>
+                                                                            </thead>
+                                                                                {% for p in object_list%}
+                                                                                 {% if p.projectAccessType%}
+                                                                                     <tr>
+                                                                                         <td class="text-center"><a class='btn btn-info btn-xs' href="{% url 'issues:projectPage' p.pk %}"><span class="glyphicon glyphicon-edit"></span><h2>مشاهده</h2></a><!-- <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span>حذف</a>--></td>
+                                                                                         <th ></th>
+                                                                                        <td class="text-center" id="home-font"><a href="{% url 'issues:profile' p.owner.pk %}">{{ p.owner}}</a></td>
+                                                                                        <th ></th>
+                                                                                        <td class="text-center" id="home-font">{{ p.startTime }}</td>
+                                                                                        <th ></th>
+                                                                                        <td class="text-center" id="home-font">{{ p.ProjectName }}</td>
+                                                                                        <th ></th>
 
 
-                                </div>
-                            </div>
-                          </div>
+                                                                                    </tr>
+                                                                                    {%endif%}
+                                                                                {%endfor%}
+                                                                            </table>
 
-                        </div>
+                                                                           </div>
+                                                                        <!-- end table 2 -->
+                                                                    </div>
 
-                            <!-- end tab -->
-				</div>
+
+                                                            </div>
+                                                        </div>
+                                                      </div>
+
+                                                    </div>
+                                                        <!-- end tab -->
+				                                </div>
                                                     <!-- end tab and project-->
+                                               {%endif%}
+                                                <!-- end  home page-->
+
+
+
+
+                                                <!-- main page -->
+                                                {% if not user.is_authenticated %}
 
                                                   <div class="row">
 
                                                     <div class=" col-md-9 col-lg-9 ">
 
+                                                        <!-- Login -->
+                                                            <div class="row clearfix">
+                                                                <div class="col-md-12 column">
+                                                                    <div class="row clearfix">
+                                                                        <div class="container">
+
+                                                                            <br>
+                                                                            <center>
+
+                                                                             <br><br>
+                                                                            <h1>! برای ورود به سایت باید اکانت لینکدین خود را وارد نمایید</h1>
+                                                                            <em></em>
+                                                                            <br>
+                                                                          <!--<button class="btn btn-primary btn-lg" href="#signup" data-toggle="modal" data-target=".bs-modal-sm">Sign In/Register</button>-->
+                                                                           <br><br>
+                                                                                <a href="test.html" title="linkedin" name="linkdin" ><img src="static/img/linkedin_signup.png"  alt="sign up with Linkdin" height="80" width="450"></a>
+                                                                            </center>
+                                                                            <br><br><br>
+                                                                            <hr class="prettyline-blue-main">
+
+                                                                          <br>
+
+                                                                         </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        <!--slidebar -->
+                                                       <div class="row clearfix">
+                                                            <div class="col-md-12 column">
+                                                                <center>
+                                                                <div class="div1">
+                                                                    </div>
+                                                                    <div id="sliderFrame">
+                                                                        <div id="slider">
+
+                                                                            <img src="{% static 'img/image-slider-1.jpg' %}" />
+                                                                            <img src="{% static 'img/image-slider-3.jpg'%}"/>
+                                                                            <img src="{% static 'img/image-slider-4.jpg'%}"/>
+                                                                            <img src="{% static 'img/image-slider-5.jpg'%}"/>
+                                                                        </div>
+                                                                       <div id="htmlcaption" style="display: none;">
+                                                                            <em>HTML</em> caption. Link to <a href="http://www.google.com/">Google</a>.
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="div2">
+
+                                                                    </div>
+                                                               </center>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- end slidebar -->
                                                         <br><br><br>
+                                                        <hr class="prettyline-blue-main">
+
+                                                        <!-- information -->
+                                                            <div class="row clearfix">
+                                                                <div class="col-md-12 column">
+                                                                        <div class="row clearfix">
+                                                                            <div class="container">
+
+                                                                                <center>
+                                                                                <div class="row clearfix">
+                                                                                    <div class="col-md-12 column">
+                                                                                        <div class="row clearfix">
+                                                                                            <h2 id="font-h">سلام</h2>
+
+                                                                                            <p id="font-l">In my younger and more vulnerable years my father gave me some advice that I've been turning over in my mind ever since. 'Whenever you feel like criticizing anyone,' he told me, 'just remember that all the people in this world haven't had the advantages that you've had.'</p>
+
+                                                                                         </div>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                                    <em></em>
+                                                                                </center>
+
+                                                                             </div>
+                                                                        </div>
+
+                                                                </div>
+                                                            </div>
+
+
+
                                                     </div>
+
                                                   </div>
+                                                {%endif%}
+                                                <!-- end main page -->
 
-
-                                                </div>
+                                           </div>
                                         </div>
                                       </div>
 
