@@ -115,7 +115,8 @@ class NewPost(generic.CreateView):
         message= "%s (%s) post in your topic :%s(%s)"% (user,'http://localhost:8000/issues/profile/%d/'%(user.id), topic,'http://localhost:8000/issues/topic/%d/'%(topic.id))
         recipient_list = [topic.creator.email]
         from_addr="pyissues.noreply@gmail.com"
-        send_mail("Post Notification", message, from_addr, recipient_list)
+        if(user != topic.creator):
+            send_mail("Post Notification", message, from_addr, recipient_list)
         return super(NewPost, self).form_valid(form)
 #----------------------------------------------------------------------------------------------------------------------
 
