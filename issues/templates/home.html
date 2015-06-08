@@ -201,7 +201,9 @@
                                                                                 </tr>
                                                                             </thead>
                                                                                 {% for p in object_list%}
-                                                                                 {% if p.projectAccessType%}
+                                                                                {% if p.projectAccessType%}
+                                                                                {% ifnotequal p.owner user%}
+
                                                                                      <tr>
                                                                                          <td class="text-center"><a class='btn btn-info btn-xs' href="{% url 'issues:projectPage' p.pk %}"><span class="glyphicon glyphicon-edit"></span><h2>مشاهده</h2></a><!-- <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span>حذف</a>--></td>
                                                                                          <th ></th>
@@ -214,6 +216,7 @@
 
 
                                                                                     </tr>
+                                                                                    {%endifnotequal%}
                                                                                     {%endif%}
                                                                                 {%endfor%}
                                                                             </table>
