@@ -30,7 +30,6 @@ class Project(models.Model):
         return self.ProjectName
 
     def get_absolute_url(self):
-        """ it gets the absolute url of current topic page, this method has been used in views"""
         return reverse('issues:projectPage',args=[self.pk])
 
     def progressUpdate(self):
@@ -133,6 +132,7 @@ class Forum(models.Model):
 class Topic(models.Model):
     title   = models.CharField(max_length=60)
     date = models.DateTimeField(auto_now_add=True)
+    emergency = models.BooleanField(default = True)
     creator = models.ForeignKey(User, blank=True, null=True)
     forum = models.ForeignKey(Forum, related_name="topics")
 
