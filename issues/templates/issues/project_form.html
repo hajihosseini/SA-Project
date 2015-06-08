@@ -32,6 +32,7 @@
     #home-font{
         font-size: 30px;
         float: right;
+        margin-right: -230px;
     }
     #font-h{
             float:center;
@@ -49,10 +50,8 @@
         }
         #font-l{
             float:right;
-            margin-right: 110px;
-            margin-left: 100px;
             font-size: 20px;
-            color: #000000;
+            color: #0077CC;
         }
     </style>
 
@@ -77,7 +76,7 @@
                 <div class="row clearfix"><!-- start 12 navbar-->
                     <div class="col-md-12 column">
 
-                               <div id='cssmenu'>
+                                <div id='cssmenu'>
                                 <ul>
                                  {% if user.is_staff %}
                                    <li class='active'><a href="{% url 'admin:index' %}"><span>مدیر</span></a></li>
@@ -120,13 +119,31 @@
                                                   <h3 class="panel-title"></h3>
                                                 </div>
                                                 <div class="panel-body">
-                                                    <form action="" method="post">{% csrf_token %}
-                                                    {{ form.as_p }}
-                                                    <input type="submit" value="Create" />
-                                                     </form>
+                                                    <form action="" role="form" class="col-md-9 go-right" method="post">{% csrf_token %}
+                                                        {% for field in form%}
+                                                            {% ifequal field.name "ProjectName"%}
+                                                                <h3 id="home-font">نام پروژه</h3>{% endifequal %}
+                                                            {% ifequal field.name "projectDescription"%}
+                                                                    <h3 id="home-font">توضیحات پروژه</h3>{% endifequal %}
+                                                            {% ifequal field.name "projectAccessType"%}
+                                                                    <h3 id="home-font">نحوه دسترسی پروژه</h3>{% endifequal %}
+                                                            {% ifequal field.name "startTime"%}
+                                                                    <h3 id="home-font">زمان شروع پروژه</h3>{% endifequal %}
 
-                                                 </div>
-                                           </div>
+                                                             {% ifequal field.name "finishedTime"%}
+                                                                    <h3 id="home-font">زمان پایان پروژه</h3>{% endifequal %}
+                                                        <br>
+                                                        <div class="form-group">
+                                                            <h4>{{field}}</h4>
+                                                            <br><br>
+
+                                                        </div>
+                                                        {% endfor%}
+                                                        <input class="btn btn-primary" type="submit" value="Create" />
+                                                    </form>
+
+                                                </div>
+                                        </div>
                                       </div>
 
                                     </div>
