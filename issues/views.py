@@ -92,7 +92,7 @@ class TopicView(generic.detail.SingleObjectMixin, generic.ListView):
 
 class NewTopic(generic.CreateView):
     model = Topic
-    fields = ["title"]
+    fields = ["title", "emergency"]
 
     def form_valid(self, form):
         form.instance.creator=self.request.user
@@ -132,20 +132,9 @@ class NewProject(generic.CreateView):
 
 class NewTask(generic.CreateView):
     model = Task
-    fields = ['taskTitle', 'taskDescription','operator', 'skills', 'deadline']
+    fields = ['taskTitle', 'taskDescription','skills', 'deadline']
     def form_valid(self, form):
         form.instance.project = Project.objects.get(pk=self.kwargs['pk'])
-        user=self.request.user
-        task=Task.objects.get(pk=self.kwargs['pk'])
-        message= "%s (%s) map you to task :%s(%s)"% (user,'http://localhost:8000/issues/profile/%d/'%(user.id), task,'http://localhost:8000/issues/taskPage/%d/'%(task.id))
-        recipient_list = []
-        for o in task.operator.all():
-            recipient_list.append(o.email)
-            print (o.email)
-        if(user.email in recipient_list):
-            recipient_list.remove(user.email)
-        from_addr="pyissues.noreply@gmail.com"
-        send_mail("Map Notification", message, from_addr, recipient_list)
         return super(NewTask, self).form_valid(form)
 #----------------------------------------------------------------------------------------------------------------------
 def outsourcingUser(request, pk):
@@ -207,7 +196,7 @@ class TaskView(generic.detail.SingleObjectMixin, generic.ListView):
         return self.object.comment.all()
 #----------------------------------------------------------------------------------------------------------------------
 def taskDone(request, pk):
-    
+
     task = get_object_or_404(Task, pk=pk)
     project = task.project
     user = request.user
@@ -238,7 +227,8 @@ def upgrade(request,pk):
         print ("profile",type(o.profile.grade))
         o.profile.grade += int(grade)
         o.profile.save()
-    task.completed=True
+    task.completed =True
+    task.grade = int(grade)
     task.save()
     from_addr="pyissues.noreply@gmail.com"
     send_mail("Rate Notification", message, from_addr, recipient_list)
