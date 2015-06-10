@@ -138,6 +138,15 @@ class NewTask(generic.CreateView):
         form.instance.project = Project.objects.get(pk=self.kwargs['pk'])
         return super(NewTask, self).form_valid(form)
 #----------------------------------------------------------------------------------------------------------------------
+
+def outsourcingSuggest(request, pk):
+    task = get_object_or_404(Task, pk=pk)
+    tskills = task.skills.all()
+    userprofile = UserProfile.objects.filter(skills__in=tskills).distinct().order_by('-grade')
+    user=[up.user for up in userprofile]
+    return render(request, "outsourcing.html", {'task': task , 'operators':user})
+#----------------------------------------------------------------------------------------------------------------------
+
 def outsourcingUser(request, pk):
     task = get_object_or_404(Task, pk=pk)
     user = User.objects.all()
@@ -196,6 +205,7 @@ class TaskView(generic.detail.SingleObjectMixin, generic.ListView):
     def get_queryset(self):
         return self.object.comment.all()
 #----------------------------------------------------------------------------------------------------------------------
+
 def taskDone(request, pk):
 
     task = get_object_or_404(Task, pk=pk)
