@@ -5,6 +5,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from .views import *
 urlpatterns = patterns('',
     url(r"^setoperators/(?P<pk>\d+)/$", LR(setoperator), name="setoperator"),
+    url(r"^outsourcingSuggest/(?P<pk>\d+)/$",outsourcingSuggest, name="outsourcingSuggest"),
     url(r"^outsourcingUser/(?P<pk>\d+)/$",outsourcingUser, name="outsourcingUser"),
     url(r"^newComment/(?P<pk>\d+)/$", LR(NewComment.as_view()), name="newComment"),
     url(r"^upgrade/(?P<pk>\d+)/$", LR(upgrade), name="upgrade"),
