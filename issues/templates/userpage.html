@@ -34,6 +34,10 @@
         float: right;
         margin-left: 100px;
     }
+    #home-fontt{
+        font-size: 30px;
+        float: right;
+    }
     #font-h{
             float:right ;
             font-size: 50px;
@@ -53,6 +57,14 @@
             margin-right: -20px;
             margin-left: 90px;
             font-size: 22px;
+            color: #000000;
+        }
+
+     #font-ll{
+            float:right;
+            margin-right: 110px;
+            margin-left: 100px;
+            font-size: 20px;
             color: #000000;
         }
     </style>
@@ -125,7 +137,11 @@
                                                     <div class="row">
                                                     <h2 id="font-h">  اطلاعات شخصی</h2>
                                                     <br><br><br><br><br><br>
+                                                     {% if user.profile.avatar %}
                                                     <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Picture" src="{{user.profile.avatar}}"  weight="300" height="280" class="img-circle"> </div>
+                                                     {% else %}
+                                                    <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Picture" src="{% static 'img/profile.jpg'%}"  weight="300" height="280" class="img-circle"> </div>
+                                                    {% endif %}
                                                     <div class=" col-md-9 col-lg-9 "><!-- text of body-->
                                                         <table class="table table-user-information">
                                                             <br><br><br>
@@ -207,40 +223,47 @@
                                                         <br><br><br><br><br>
                                                              <div class="main">
                                                                   {% if user.is_authenticated %}
-                                                                    <table class="table table-striped custab">
-                                                                    <thead>
-                                                                        <tr>
-                                                                             <th id="font-l">عنوان</th>
-                                                                            <th id="font-l">مدیر پروژه</th>
-                                                                            <th id="font-l">تاریخ ایجاد پروژه</th>
-                                                                            <th class="text-center" id="font-l">توضیحات</th>
 
-                                                                        </tr>
-                                                                    </thead>
-                                                                            {% for p in project %}
-                                                                            {%ifequal p.progressUpdate 100%}
-                                                                            {% if p.projectAccessType%}
-                                                                            <tr>
-                                                                                <td><div class="title">{{ p.ProjectName }}</div></td>
-                                                                                <td>{{ p.startTime }}</td>
-                                                                                <td><a href="{% url 'issues:profile' p.owner.pk %}">{{ p.owner}}</a></td>
-                                                                                <td>{{ p.projectDescription |linebreaksbr }}</td>
+                                                                            <table class="table table-striped custab">
+                                                                            <thead>
+                                                                                 <tr>
+                                                                                    <th ></th>
+                                                                                    <th ></th>
+                                                                                   <th class="text-center" id="home-fontt">تاریخ ایجاد پروژه</th>
+                                                                                    <th ></th>
 
-                                                                                <td><a class="button" href="{% url 'issues:projectPage' p.pk %}">VIEW</a></td>
-                                                                            </tr>
-                                                                            {%else%}
-                                                                                {% ifequal user userp %}
-                                                                                    <tr>
-                                                                                    <td><div class="title">{{ p.ProjectName }}</div></td>
-                                                                                    <td>{{ p.startTime }}</td>
-                                                                                    <td><a href="{% url 'issues:profile' p.owner.pk %}">{{ p.owner}}</a></td>
-                                                                                    <td><a class="button" href="{% url 'issues:projectPage' p.pk %}">VIEW</a></td>
-                                                                            </tr>
-                                                                                {%endifequal%}
-                                                                            {%endif%}
-                                                                            {%endifequal%}
-                                                                            {% endfor %}
-                                                                    </table>
+                                                                                     <th class="text-center" id="home-fontt">مدیر پروژه</th>
+                                                                                    <th ></th>
+
+                                                                                    <th class="text-center" id="home-fontt">عنوان</th>
+                                                                                    <th ></th>
+
+                                                                                </tr>
+                                                                            </thead>
+                                                                                {% for p in object_list%}
+
+                                                                                   {%ifequal p.progressUpdate 100%}
+                                                                                    {% if p.projectAccessType%}
+                                                                                     <tr>
+                                                                                         <td class="text-center"><a class='btn btn-info btn-xs' href="{% url 'issues:projectPage' p.pk %}"><span class="glyphicon glyphicon-edit"></span><h2>مشاهده</h2></a><!-- <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span>حذف</a>--></td>
+                                                                                         <th ></th>
+                                                                                         <td class="text-center" id="home-font">{{ p.startTime }}</td>
+                                                                                        <th ></th>
+
+                                                                                        <td class="text-center" id="home-font"><a href="{% url 'issues:profile' p.owner.pk %}">{{ p.owner}}</a></td>
+
+                                                                                        <th ></th>
+                                                                                        <td class="text-center" id="home-font">{{ p.ProjectName }}</td>
+                                                                                        <th ></th>
+
+
+                                                                                    </tr>
+                                                                                        {%endif%}
+                                                                                        {% endifequal%}
+                                                                                       {%endfor%}
+                                                                            </table>
+
+
                                                                 {%endif%}
                                                                </div>
                                                         <!-- end etmam-->
@@ -251,19 +274,26 @@
                                                         <br><br><br><br><br>
                                                         <div class="main">
                                                                   {% if user.is_authenticated %}
-                                                                    <table class="table table-striped custab">
-                                                                    <thead>
-                                                                        <tr>
+                                                                     <table class="table table-striped custab">
+                                                                            <thead>
+                                                                                 <tr>
+                                                                                    <th ></th>
+                                                                                    <th ></th>
+                                                                                   <th class="text-center" id="home-fontt">نمره</th>
+                                                                                    <th ></th>
 
-                                                                            <th id="font-l">عنوان</th>
-                                                                            <th id="font-l">مدیر پروژه</th>
-                                                                            <th id="font-l">تاریخ ایجاد پروژه</th>
-                                                                            <th  id="font-l">توضیحات</th>
-                                                                            <th id="font-l">نمره </th>
+                                                                                   <th class="text-center" id="home-fontt">تاریخ ایجاد پروژه</th>
+                                                                                    <th ></th>
 
-                                                                        </tr>
-                                                                    </thead>
-                                                                            {% for t in task %}
+                                                                                     <th class="text-center" id="home-fontt">مدیر پروژه</th>
+                                                                                    <th ></th>
+
+                                                                                    <th class="text-center" id="home-fontt">عنوان</th>
+                                                                                    <th ></th>
+
+                                                                                </tr>
+                                                                            </thead>
+                                                                                {% for t in task %}
                                                                             {% if t.completed%}
                                                                             <tr>
                                                                                 <td><div class="title">{{ t.project.ProjectName }}</div></td>
@@ -285,7 +315,7 @@
                                                                             </tr>{%endif%}
                                                                                 {%endifequal%}
                                                                             {% endfor %}
-                                                                    </table>
+                                                                            </table>
                                                                 {%endif%}
                                                                </div>
                                                         <!-- end not finish-->
