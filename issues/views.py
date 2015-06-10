@@ -143,7 +143,7 @@ def outsourcingSuggest(request, pk):
     task = get_object_or_404(Task, pk=pk)
     tskills = task.skills.all()
     userprofile = UserProfile.objects.filter(skills__in=tskills).distinct().order_by('-grade')
-    user=[up.user for up in userprofile]
+    user=[up.user for up in userprofile if up.state]
     return render(request, "outsourcing.html", {'task': task , 'operators':user})
 #----------------------------------------------------------------------------------------------------------------------
 
